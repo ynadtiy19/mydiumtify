@@ -12,7 +12,7 @@ Future<Response> onRequest(RequestContext context) async {
   final id = params['id'] ?? '333dc1eeda1a';
 
   // 获取HTML内容
-  final url = 'http://localhost:8080/mediumhtml?id=$id';
+  final url = 'https://mydiumtify.globeapp.dev/mediumhtml?id=$id';
   final htmlResponse = await http.get(Uri.parse(url));
   if (htmlResponse.statusCode != 200) {
     return Response(statusCode: 500, body: 'Failed to load HTML content');
