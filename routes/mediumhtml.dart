@@ -97,15 +97,29 @@ Future<Response> onRequest(RequestContext context) async {
   if (head != null && fourthDiv != null) {
     // 组合成新的HTML
     String newHtml = '''
-    <html lang="en">
-    
-      ${head.outerHtml}
-   
-    <body>
-      ${fourthDiv.outerHtml}
-    </body>
-    </html>
-    ''';
+<html lang="en">
+<head>
+  ${head.outerHtml}
+</head>
+<body>
+  ${fourthDiv.outerHtml}
+
+  <!-- 添加 Google Translate 语言选择 -->
+  <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 1000;"></div>
+
+  <!-- 引入 JS 文件 -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {pageLanguage: 'en'},
+        'google_translate_element'
+      );
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
+''';
 
     // 解析HTML
     Document document = parse(newHtml);
