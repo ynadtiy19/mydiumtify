@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:beautiful_soup_dart/beautiful_soup.dart';
 import 'package:dart_frog/dart_frog.dart';
-import 'package:html/dom.dart';
-import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
@@ -33,50 +31,24 @@ Future<Response> onRequest(RequestContext context) async {
 
 // 翻译函数，使用heroapi
   Future<String> translateText(String text, String targetLanguage) async {
-    // 定义基础URL
-    String baseUrl = 'https://translate.google.com/m';
-
-    // 创建查询参数
+    String apiUrl = 'https://heroapi.ir/api/translate';
     Map<String, String> queryParams = {
-      'tl': targetLanguage,
-      'sl': 'auto',
-      'q': text,
+      'text': text,
+      'to_lang': targetLanguage,
+      'from_lang': 'auto',
     };
-
-    // 生成查询字符串
     String queryString = Uri(queryParameters: queryParams).query;
-
-    // 构建完整的请求URL
-    String requestUrl = '$baseUrl?$queryString';
+    String requestUrl = '$apiUrl?$queryString';
 
     try {
-      // 发送GET请求获取HTML内容
-      final headers = {
-        'User-Agent':
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0',
-      };
-      final response = await http.get(Uri.parse(requestUrl), headers: headers);
-
+      http.Response response = await http.get(Uri.parse(requestUrl));
       if (response.statusCode == 200) {
-        // 如果存在编码问题，手动解码
-        String responseBody;
-        try {
-          responseBody = response.body;
-        } catch (e) {
-          responseBody = latin1.decode(response.bodyBytes); // 使用latin1解码尝试
-          print('Error: $e');
-        }
-
-        // 使用`package:html`解析HTML
-        Document document = parse(responseBody);
-
-        // 提取<div class="result-container">标签中的内容
-        final resultDiv = document.querySelector('div.result-container');
-        if (resultDiv != null) {
-          return resultDiv.text;
+        Map<String, dynamic> data =
+            json.decode(response.body) as Map<String, dynamic>;
+        if (data['success'] == true) {
+          return data['data'] as String? ?? '';
         } else {
-          throw Exception(
-              'Translation extraction failed: result container not found');
+          throw Exception('Translation failed: ${data['error_message']}');
         }
       } else {
         throw Exception(
