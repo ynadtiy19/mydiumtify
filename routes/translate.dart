@@ -61,9 +61,10 @@ Future<Response> onRequest(RequestContext context) async {
         // 如果存在编码问题，手动解码
         String responseBody;
         try {
-          responseBody = utf8.decode(response.bodyBytes);
+          responseBody = response.body;
         } catch (e) {
           responseBody = latin1.decode(response.bodyBytes); // 使用latin1解码尝试
+          print('Error: $e');
         }
 
         // 使用`package:html`解析HTML
