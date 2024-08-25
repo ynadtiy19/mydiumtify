@@ -11,7 +11,7 @@ Future<Response> onRequest(RequestContext context) async {
   final targetId = params['id'] ?? '333dc1eeda1a';
   final targetLanguage = params['targetLanguage'] ?? 'en';
 
-  //https://mydiumtify.globeapp.dev/translate?id=333dc1eeda1a&targetLanguage=en
+  //https://mydiumtify.globeapp.dev/translate?id=pitaka-magez-slider-2022-review-powerful-nightstand-wireless-charging-station-macsources-abcf152e285f&targetLanguage=en
 
   // 从指定URL获取HTML字符串
   Future<String> fetchHtml(String url) async {
