@@ -40,7 +40,7 @@ Future<Response> onRequest(RequestContext context) async {
 
       if (response.statusCode == 200) {
         // 使用BeautifulSoup解析HTML
-        final soup = BeautifulSoup(response.body);
+        BeautifulSoup soup = BeautifulSoup(response.body);
 
         // 提取<div class="result-container">标签中的内容
         final resultDiv = soup.find('div', class_: 'result-container');
