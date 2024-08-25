@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:beautiful_soup_dart/beautiful_soup.dart';
 import 'package:dart_frog/dart_frog.dart';
+import 'package:html/dom.dart';
+import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
@@ -64,11 +66,11 @@ Future<Response> onRequest(RequestContext context) async {
           responseBody = latin1.decode(response.bodyBytes); // 使用latin1解码尝试
         }
 
-        // 使用BeautifulSoup解析HTML
-        BeautifulSoup soup = BeautifulSoup(responseBody);
+        // 使用`package:html`解析HTML
+        Document document = parse(responseBody);
 
         // 提取<div class="result-container">标签中的内容
-        final resultDiv = soup.find('div', class_: 'result-container');
+        final resultDiv = document.querySelector('div.result-container');
         if (resultDiv != null) {
           return resultDiv.text;
         } else {
