@@ -16,6 +16,7 @@ Future<Response> onRequest(RequestContext context) async {
   // Default to `there` if there is no query parameter.
   var query = params['q'] ?? 'apple iphone 13';
   var pageindex = params['pageindex'] ?? '3';
+
   Future<String?> fetchData(String url) async {
     try {
       // 发送 HTTP GET 请求
@@ -37,17 +38,16 @@ Future<Response> onRequest(RequestContext context) async {
 
   var jsonresult = await fetchData(
       "https://readmedium.com/api/search-posts?query=$query&pageIndex=$pageindex");
-  //响应纯json
 
   // 假设 jsonresult 是通过 fetchData 获取的 JSON 响应并已被解析为一个 Map
   var json = jsonDecode(jsonresult!);
 
-  List<MediaInfo> mediaInfoList = [];
+  Map<String, Map<String, dynamic>> mediaInfoMap = {};
 
   // 将 previewInfos 转换为 List
   List<dynamic> previewInfos = json['previewInfos'] as List<dynamic>;
 
-// 遍历 JSON 数据并创建 MediaInfo 实例
+  // 遍历 JSON 数据并创建 MediaInfo 实例
   for (var data in previewInfos) {
     final uniqueSlug =
         JsonPath(r'$.uniqueSlug').read(data).first.value.toString();
@@ -74,7 +74,7 @@ Future<Response> onRequest(RequestContext context) async {
     final isEligibleForRevenue =
         JsonPath(r'$.isEligibleForRevenue').read(data).first.value.toString();
 
-    // 创建 MediaInfo 实例并添加到列表中
+    // 创建 MediaInfo 实例
     MediaInfo mediaInfo = MediaInfo(
       uniqueSlug: uniqueSlug,
       title: title,
@@ -87,15 +87,12 @@ Future<Response> onRequest(RequestContext context) async {
       isEligibleForRevenue: isEligibleForRevenue,
     );
 
-    mediaInfoList.add(mediaInfo);
+    // 将 MediaInfo 实例添加到 Map 中
+    mediaInfoMap[uniqueSlug] = mediaInfo.toJson();
   }
 
-// 使用 toJson 方法将 MediaInfo 列表转换为 Map 列表
-  List<Map<String, dynamic>> jsonResponse =
-      mediaInfoList.map((media) => media.toJson()).toList();
-
-// 返回 JSON 响应
-  return Response.json(body: jsonResponse);
+  // 返回 JSON 响应
+  return Response.json(body: mediaInfoMap);
 }
 
 class MediaInfo {
