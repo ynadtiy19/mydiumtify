@@ -32,7 +32,7 @@ Future<Response> onRequest(RequestContext context) async {
 // 翻译函数，使用heroapi
   Future<String> translateText(String text, String targetLanguage) async {
     final url = Uri.parse(
-        'https://translate.google.com/m?tl=$targetLanguage&sl=auto&q=${Uri.encodeComponent(text)}');
+        'https://translate.google.com/m?tl=$targetLanguage&sl=auto&q=${text}');
 
     try {
       // 发送GET请求获取HTML内容
