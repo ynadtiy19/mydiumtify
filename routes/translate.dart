@@ -9,7 +9,7 @@ Future<Response> onRequest(RequestContext context) async {
   //translate?id=333dc1eeda1a
   final params = context.request.uri.queryParameters;
   final targetId = params['id'] ?? '333dc1eeda1a';
-  final targetLanguage = params['targetLanguage'] ?? 'en';
+  final targetLanguage = params['targetLanguage'] ?? 'zh-CN';
 
   //https://mydiumtify.globeapp.dev/translate?id=pitaka-magez-slider-2022-review-powerful-nightstand-wireless-charging-station-macsources-abcf152e285f&targetLanguage=en
 
@@ -31,24 +31,24 @@ Future<Response> onRequest(RequestContext context) async {
 
 // 翻译函数，使用heroapi
   Future<String> translateText(String text, String targetLanguage) async {
-    String apiUrl = 'https://heroapi.ir/api/translate';
-    Map<String, String> queryParams = {
-      'text': text,
-      'to_lang': targetLanguage,
-      'from_lang': 'auto',
-    };
-    String queryString = Uri(queryParameters: queryParams).query;
-    String requestUrl = '$apiUrl?$queryString';
+    final url = Uri.parse(
+        'https://translate.google.com/m?tl=$targetLanguage&sl=auto&q=${Uri.encodeComponent(text)}');
 
     try {
-      http.Response response = await http.get(Uri.parse(requestUrl));
+      // 发送GET请求获取HTML内容
+      final response = await http.get(url);
+
       if (response.statusCode == 200) {
-        Map<String, dynamic> data =
-            json.decode(response.body) as Map<String, dynamic>;
-        if (data['success'] == true) {
-          return data['data'] as String? ?? '';
+        // 使用BeautifulSoup解析HTML
+        final soup = BeautifulSoup(response.body);
+
+        // 提取<div class="result-container">标签中的内容
+        final resultDiv = soup.find('div', class_: 'result-container');
+        if (resultDiv != null) {
+          return resultDiv.text;
         } else {
-          throw Exception('Translation failed: ${data['error_message']}');
+          throw Exception(
+              'Translation extraction failed: result container not found');
         }
       } else {
         throw Exception(
