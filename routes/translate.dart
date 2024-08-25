@@ -31,16 +31,41 @@ Future<Response> onRequest(RequestContext context) async {
 
 // 翻译函数，使用heroapi
   Future<String> translateText(String text, String targetLanguage) async {
-    final url = Uri.parse(
-        'https://translate.google.com/m?tl=$targetLanguage&sl=auto&q=${text}');
+    // 定义基础URL
+    String baseUrl = 'https://translate.google.com/m';
+
+    // 创建查询参数
+    Map<String, String> queryParams = {
+      'tl': targetLanguage,
+      'sl': 'auto',
+      'q': text,
+    };
+
+    // 生成查询字符串
+    String queryString = Uri(queryParameters: queryParams).query;
+
+    // 构建完整的请求URL
+    String requestUrl = '$baseUrl?$queryString';
 
     try {
       // 发送GET请求获取HTML内容
-      final response = await http.get(url);
+      final headers = {
+        'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0',
+      };
+      final response = await http.get(Uri.parse(requestUrl), headers: headers);
 
       if (response.statusCode == 200) {
+        // 如果存在编码问题，手动解码
+        String responseBody;
+        try {
+          responseBody = utf8.decode(response.bodyBytes);
+        } catch (e) {
+          responseBody = latin1.decode(response.bodyBytes); // 使用latin1解码尝试
+        }
+
         // 使用BeautifulSoup解析HTML
-        BeautifulSoup soup = BeautifulSoup(response.body);
+        BeautifulSoup soup = BeautifulSoup(responseBody);
 
         // 提取<div class="result-container">标签中的内容
         final resultDiv = soup.find('div', class_: 'result-container');
