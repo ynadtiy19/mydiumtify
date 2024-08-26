@@ -71,8 +71,12 @@ Future<Response> onRequest(RequestContext context) async {
         JsonPath(r'$.readingTime').read(data).first.value.toString();
     final createdAt =
         JsonPath(r'$.createdAt').read(data).first.value.toString();
-    final isEligibleForRevenue =
+    final isEligibleForRevenueString =
         JsonPath(r'$.isEligibleForRevenue').read(data).first.value.toString();
+
+// 将字符串转换为布尔值
+    final isEligibleForRevenue =
+        isEligibleForRevenueString.toLowerCase() == 'true';
 
     // 创建 MediaInfo 实例
     MediaInfo mediaInfo = MediaInfo(
@@ -104,7 +108,7 @@ class MediaInfo {
   final String postImg;
   final String readingTime;
   final String createdAt;
-  final String isEligibleForRevenue;
+  final bool isEligibleForRevenue;
 
   MediaInfo({
     required this.uniqueSlug,
@@ -118,7 +122,6 @@ class MediaInfo {
     required this.isEligibleForRevenue,
   });
 
-  @override
   // 将 MediaInfo 转换为 Map
   Map<String, dynamic> toJson() {
     return {
