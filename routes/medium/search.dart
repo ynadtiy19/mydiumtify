@@ -59,13 +59,21 @@ Future<Response> onRequest(RequestContext context) async {
     // 获取并修改 avatarUrl
     String avatarUrl =
         JsonPath(r'$.authorInfo.avatarUrl').read(data).first.value.toString();
-    avatarUrl = avatarUrl.replaceFirst(
-        'miro.medium.com', 'cdn-images-1.readmedium.com');
+    avatarUrl = avatarUrl
+        .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
+        .replaceFirst('v2', 'v2/resize:fill:2048:1152'); // 2K 分辨率
 
-    // 获取并修改 postImg
+// 如果需要 4K 分辨率，可以使用如下替换方式
+// .replaceFirst('v2', 'v2/resize:fill:3840:2160'); // 4K 分辨率
+
+// 获取并修改 postImg
     String postImg = JsonPath(r'$.postImg').read(data).first.value.toString();
-    postImg =
-        postImg.replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com');
+    postImg = postImg
+        .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
+        .replaceFirst('v2', 'v2/resize:fit:2048'); // 2K 分辨率
+
+// 如果需要 4K 分辨率，可以使用如下替换方式
+// .replaceFirst('v2', 'v2/resize:fit:3840'); // 4K 分辨率
 
     final readingTime =
         JsonPath(r'$.readingTime').read(data).first.value.toString();
