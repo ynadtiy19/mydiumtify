@@ -49,38 +49,39 @@ Future<Response> onRequest(RequestContext context) async {
 
   // 遍历 JSON 数据并创建 MediaInfo 实例
   for (var data in previewInfos) {
-    final uniqueSlug =
-        JsonPath(r'$.uniqueSlug').read(data).first.value.toString();
-    final title = JsonPath(r'$.title').read(data).first.value.toString();
-    final subtitle = JsonPath(r'$.subtitle').read(data).first.value.toString();
-    final name =
-        JsonPath(r'$.authorInfo.name').read(data).first.value.toString();
+    final uniqueSlug = JsonPath(r'$.uniqueSlug').readValues(data).toString();
+    final title = JsonPath(r'$.title').readValues(data).toString();
+    final subtitle = JsonPath(r'$.subtitle').readValues(data).toString();
+    final name = JsonPath(r'$.authorInfo.name').readValues(data).toString();
 
     // 获取并修改 avatarUrl
     String avatarUrl =
-        JsonPath(r'$.authorInfo.avatarUrl').read(data).first.value.toString();
+        JsonPath(r'$.authorInfo.avatarUrl').readValues(data).toString();
     avatarUrl = avatarUrl
         .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
-        .replaceFirst('v2', 'v2/resize:fill:2048:1152'); // 2K 分辨率
+        .replaceFirst(
+          'v2/resize:fill:88:88',
+          'v2/resize:fill:2048:1152',
+        ); // 2K 分辨率
 
 // 如果需要 4K 分辨率，可以使用如下替换方式
 // .replaceFirst('v2', 'v2/resize:fill:3840:2160'); // 4K 分辨率
 
 // 获取并修改 postImg
-    String postImg = JsonPath(r'$.postImg').read(data).first.value.toString();
+    String postImg = JsonPath(r'$.postImg').readValues(data).toString();
     postImg = postImg
         .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
-        .replaceFirst('v2', 'v2/resize:fit:2048'); // 2K 分辨率
+        .replaceFirst('v2/resize:fit:224', 'v2/resize:fit:2048'); // 2K 分辨率
 
 // 如果需要 4K 分辨率，可以使用如下替换方式
 // .replaceFirst('v2', 'v2/resize:fit:3840'); // 4K 分辨率
 
-    final readingTime =
-        JsonPath(r'$.readingTime').read(data).first.value.toString();
-    final createdAt =
-        JsonPath(r'$.createdAt').read(data).first.value.toString();
+    final readingTime = JsonPath(r'$.readingTime').readValues(data).toString();
+    final createdAt = JsonPath(r'$.createdAt').readValues(data).toString();
     final isEligibleForRevenueString =
-        JsonPath(r'$.isEligibleForRevenue').read(data).first.value.toString();
+        JsonPath(r'$.isEligibleForRevenue').readValues(data).toString();
+
+    //JsonPath(r'$.isEligibleForRevenue').readValues(data).first.value.toString();
 
 // 将字符串转换为布尔值
     final isEligibleForRevenue =
