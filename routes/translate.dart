@@ -29,9 +29,9 @@ Future<Response> onRequest(RequestContext context) async {
     }
   }
 
-// 翻译函数，使用heroapi
+// 翻译函数，heroapi-6xl7.onrender.com
   Future<String> translateText(String text, String targetLanguage) async {
-    String apiUrl = 'https://heroapi.ir/api/translate';
+    String apiUrl = 'heroapi-6xl7.onrender.com/api/translate';
     Map<String, String> queryParams = {
       'text': text,
       'to_lang': targetLanguage,
