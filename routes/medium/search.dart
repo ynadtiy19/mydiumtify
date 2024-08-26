@@ -49,14 +49,16 @@ Future<Response> onRequest(RequestContext context) async {
 
   // 遍历 JSON 数据并创建 MediaInfo 实例
   for (var data in previewInfos) {
-    final uniqueSlug = JsonPath(r'$.uniqueSlug').readValues(data).toString();
-    final title = JsonPath(r'$.title').readValues(data).toString();
-    final subtitle = JsonPath(r'$.subtitle').readValues(data).toString();
-    final name = JsonPath(r'$.authorInfo.name').readValues(data).toString();
+    final uniqueSlug =
+        JsonPath(r'$.uniqueSlug').readValues(data).first.toString();
+    final title = JsonPath(r'$.title').readValues(data).first.toString();
+    final subtitle = JsonPath(r'$.subtitle').readValues(data).first.toString();
+    final name =
+        JsonPath(r'$.authorInfo.name').readValues(data).first.toString();
 
     // 获取并修改 avatarUrl
     String avatarUrl =
-        JsonPath(r'$.authorInfo.avatarUrl').readValues(data).toString();
+        JsonPath(r'$.authorInfo.avatarUrl').readValues(data).first.toString();
     avatarUrl = avatarUrl
         .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
         .replaceFirst(
@@ -68,7 +70,7 @@ Future<Response> onRequest(RequestContext context) async {
 // .replaceFirst('v2', 'v2/resize:fill:3840:2160'); // 4K 分辨率
 
 // 获取并修改 postImg
-    String postImg = JsonPath(r'$.postImg').readValues(data).toString();
+    String postImg = JsonPath(r'$.postImg').readValues(data).first.toString();
     postImg = postImg
         .replaceFirst('miro.medium.com', 'cdn-images-1.readmedium.com')
         .replaceFirst('v2/resize:fit:224', 'v2/resize:fit:2048'); // 2K 分辨率
@@ -76,10 +78,12 @@ Future<Response> onRequest(RequestContext context) async {
 // 如果需要 4K 分辨率，可以使用如下替换方式
 // .replaceFirst('v2', 'v2/resize:fit:3840'); // 4K 分辨率
 
-    final readingTime = JsonPath(r'$.readingTime').readValues(data).toString();
-    final createdAt = JsonPath(r'$.createdAt').readValues(data).toString();
+    final readingTime =
+        JsonPath(r'$.readingTime').readValues(data).first.toString();
+    final createdAt =
+        JsonPath(r'$.createdAt').readValues(data).first.toString();
     final isEligibleForRevenueString =
-        JsonPath(r'$.isEligibleForRevenue').readValues(data).toString();
+        JsonPath(r'$.isEligibleForRevenue').readValues(data).first.toString();
 
     //JsonPath(r'$.isEligibleForRevenue').readValues(data).first.value.toString();
 
