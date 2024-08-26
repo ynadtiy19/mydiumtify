@@ -11,7 +11,7 @@ Future<Response> onRequest(RequestContext context) async {
   final targetId = params['id'] ?? '333dc1eeda1a';
   final targetLanguage = params['targetLanguage'] ?? 'zh-CN';
 
-  //https://mydiumtify.globeapp.dev/translate?id=pitaka-magez-slider-2022-review-powerful-nightstand-wireless-charging-station-macsources-abcf152e285f&targetLanguage=en
+  //https://mydiumtify.globeapp.dev/translate?targetLanguage=zh-CN&id=pitaka-magez-slider-2022-review-powerful-nightstand-wireless-charging-station-macsources-abcf152e285f
 
   // 从指定URL获取HTML字符串
   Future<String> fetchHtml(String url) async {
@@ -31,7 +31,7 @@ Future<Response> onRequest(RequestContext context) async {
 
 // 翻译函数，heroapi-6xl7.onrender.com
   Future<String> translateText(String text, String targetLanguage) async {
-    String apiUrl = 'heroapi-6xl7.onrender.com/api/translate';
+    String apiUrl = 'https://heroapi-6xl7.onrender.com/api/translate';
     Map<String, String> queryParams = {
       'text': text,
       'to_lang': targetLanguage,
