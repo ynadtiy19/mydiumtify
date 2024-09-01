@@ -23,7 +23,7 @@ Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
     Future<http.Response?> sendRequest() async {
       try {
         final response =
-            await http.get(requestUrl).timeout(Duration(seconds: 50));
+            await http.get(requestUrl).timeout(Duration(seconds: 10));
         print('测试成功生效');
         return response;
       } on TimeoutException catch (_) {
