@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -6,7 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:mime/mime.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  //website/chatadvance
+  // Replace with your actual API key and model name
   final apiKey = 'AIzaSyD8pA32k91ftgHbqvBto6jj7HIo_LPeRVk';
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
@@ -20,21 +21,21 @@ Future<Response> onRequest(RequestContext context) async {
           contentType.startsWith('multipart/form-data')) {
         final boundary = contentType.split('boundary=')[1];
         final transformer = MimeMultipartTransformer(boundary);
-        final bodyStream = context.request.body();
-        final parts =
-            await transformer.bind(bodyStream as Stream<List<int>>).toList();
 
-        // 提取图片文件
+        // Read the entire body as a stream of bytes
+        final bodyStream = context.request.bytes().asBroadcastStream();
+
+        final parts = await transformer.bind(bodyStream).toList();
+
+        // Extract image file
         Uint8List? imageData;
         for (var part in parts) {
           final headers = part.headers;
           final contentDisposition = headers['content-disposition'];
           if (contentDisposition != null &&
               contentDisposition.contains('filename=')) {
-            final data = await part
-                .toList()
-                .then((data) => data.expand((x) => x).toList());
-            imageData = Uint8List.fromList(data); // 将 List<int> 转换为 Uint8List
+            final data = await part.toList();
+            imageData = Uint8List.fromList(data.expand((x) => x).toList());
             break;
           }
         }
@@ -46,7 +47,7 @@ Future<Response> onRequest(RequestContext context) async {
           );
         }
 
-        // 提取可选的 query 参数
+        // Extract optional query parameter
         final query = context.request.uri.queryParameters['q'] ??
             'What do you see? Use lists. Start with a headline for each image.';
 
@@ -57,7 +58,7 @@ Future<Response> onRequest(RequestContext context) async {
           ])
         ];
 
-        // 生成基于图片的文本
+        // Generate text based on the image
         final responses = model.generateContentStream(content);
         final generatedText = StringBuffer();
         await for (final response in responses) {
