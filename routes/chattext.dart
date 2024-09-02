@@ -29,5 +29,5 @@ Future<Response> onRequest(RequestContext context) async {
     responseBody = 'This is a new route!';
   }
 
-  return Response.json(body: responseBody);
+  return Response.json(body: {"isSender": false, "text": responseBody});
 }
