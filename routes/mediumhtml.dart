@@ -107,36 +107,16 @@ Future<Response> onRequest(RequestContext context) async {
 </html>
 ''';
 
-    // 解析HTML
-    Document document = parse(newHtml);
-
-    // 开始解析
-    List<Link> linkList = parseHtml(document); //可以返回文章图像链接
-
-    String imageHtml = linkList
-        .map((link) => '<img src="${link.dataSrc}" alt="Image">')
-        .join('\n');
-// 将图像片段插入到第四个div之后
-    String bodyContent = '''
-${fourthDiv.outerHtml}
-<div>$imageHtml</div>
-''';
-
-// 创建新的HTML文档
-    String finalHtml = '''
-<html lang="en">
-<head>
-  ${head.outerHtml}
-</head>
-<body>
-  $bodyContent
-</body>
-</html>
-''';
+    int contentLength = newHtml.length;
 
     return Response(
-      body: finalHtml,
-      headers: {'Content-Type': 'text/html'},
+      statusCode: 200,
+      body: newHtml,
+      headers: {
+        'Content-Type': 'text/html',
+        'Content-Length': contentLength.toString(),
+        'Connection': 'close',
+      },
     );
   } else {
     print('未能找到指定的HTML部分');
