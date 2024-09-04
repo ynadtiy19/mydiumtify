@@ -107,11 +107,19 @@ Future<Response> onRequest(RequestContext context) async {
 </html>
 ''';
 
-    int contentLength = newHtml.length;
+    // 解析HTML
+    Document document = parse(newHtml);
+
+    // 开始解析
+    List<Link> linkList = parseHtml(document); //可以返回文章图像链接
+
+    String finalhtml = document.outerHtml;
+
+    int contentLength = finalhtml.length;
 
     return Response(
       statusCode: 200,
-      body: newHtml,
+      body: finalhtml,
       headers: {
         'Content-Type': 'text/html',
         'Content-Length': contentLength.toString(),
