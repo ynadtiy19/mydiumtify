@@ -113,8 +113,29 @@ Future<Response> onRequest(RequestContext context) async {
     // 开始解析
     List<Link> linkList = parseHtml(document); //可以返回文章图像链接
 
+    String imageHtml = linkList
+        .map((link) => '<img src="${link.dataSrc}" alt="Image">')
+        .join('\n');
+// 将图像片段插入到第四个div之后
+    String bodyContent = '''
+${fourthDiv.outerHtml}
+<div>$imageHtml</div>
+''';
+
+// 创建新的HTML文档
+    String finalHtml = '''
+<html lang="en">
+<head>
+  ${head.outerHtml}
+</head>
+<body>
+  $bodyContent
+</body>
+</html>
+''';
+
     return Response(
-      body: document.outerHtml,
+      body: finalHtml,
       headers: {'Content-Type': 'text/html'},
     );
   } else {
