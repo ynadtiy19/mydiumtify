@@ -102,7 +102,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   // print(splitPTexts);
 
-// 将拆分后的文本内容均匀分为三部分  20000个字符，html本身25300个字符
+// 将拆分后的文本内容均匀分为四部分  20000个字符，html本身25300个字符
   int totalLines = splitPTexts.length;
   int baseSize = totalLines ~/ 4; // 每部分的基本行数
   int remainder = totalLines % 4; // 余数行数
