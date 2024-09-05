@@ -139,14 +139,19 @@ Future<Response> onRequest(RequestContext context) async {
     // 解析HTML
     Document document = parse(newHtml);
 
+    parseHtml(document); //可以返回文章图像链接
+
     // 删除body中的第一个div
     Element? firstDiv = document.body?.querySelector('div');
 
     if (firstDiv != null) {
-      // 提取第一个div下的所有子元素
-      String contentInsideFirstDiv = firstDiv.innerHtml;
+      // 获取当前的class属性
+      String? classAttr = firstDiv.attributes['class'];
 
-      List<Link> linkList = parseHtml(document); //可以返回文章图像链接
+      // 如果class属性存在且包含"pt-20"，则移除该类
+      if (classAttr != null && classAttr.contains('pt-20')) {
+        firstDiv.classes.remove('pt-20'); // 移除 pt-20 类
+      }
 
       // 组合成新的HTML
       String finalHtml = '''
@@ -157,7 +162,7 @@ Future<Response> onRequest(RequestContext context) async {
   ${head.outerHtml}
 </head>
 <body>
-  $contentInsideFirstDiv
+  ${document.body?.innerHtml}
 </body>
 </html>
 ''';
