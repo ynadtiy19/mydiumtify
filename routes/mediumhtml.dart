@@ -211,8 +211,11 @@ Future<Response> onRequest(RequestContext context) async {
     </script>
 </head>
 <body>
+    <div class="language-selector">
+        <select class="cloudlocalization-selection"></select>
+    </div>
     ${document.body?.innerHtml}
-    <select class="cloudlocalization-selection"></select>
+    
 </body>
 </html>
 ''';
