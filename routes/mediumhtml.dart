@@ -65,9 +65,8 @@ Future<Response> onRequest(RequestContext context) async {
 //isok🎉🎉🎉
   Document document = parse(uuu);
 
-  // 提取<head>部分
+  // 提取<head>部分===>>删除不能访问的js和css文件
   Element? head = document.head;
-
   // 如果<head>存在，删除指定的<link>标签
   if (head != null) {
     // 查找<head>中的所有<link>标签
@@ -95,6 +94,7 @@ Future<Response> onRequest(RequestContext context) async {
       }
     }
   }
+
   // 提取<body>部分的直接子元素
   Element? body = document.body;
   Element? fourthDiv;
@@ -127,8 +127,6 @@ Future<Response> onRequest(RequestContext context) async {
      <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎉🎉🎉Medium</title>
   ${head.outerHtml}
 </head>
@@ -141,22 +139,43 @@ Future<Response> onRequest(RequestContext context) async {
     // 解析HTML
     Document document = parse(newHtml);
 
-    // 开始解析
-    List<Link> linkList = parseHtml(document); //可以返回文章图像链接
+    // 删除body中的第一个div
+    Element? firstDiv = document.body?.querySelector('div');
 
-    String finalhtml = document.outerHtml;
+    if (firstDiv != null) {
+      // 提取第一个div下的所有子元素
+      String contentInsideFirstDiv = firstDiv.innerHtml;
 
-    int contentLength = finalhtml.length;
+      List<Link> linkList = parseHtml(document); //可以返回文章图像链接
 
-    return Response(
-      statusCode: 200,
-      body: finalhtml,
-      headers: {
-        'Content-Type': 'text/html',
-        'Content-Length': contentLength.toString(),
-        'Connection': 'close',
-      },
-    );
+      // 组合成新的HTML
+      String finalHtml = '''
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>🎉🎉🎉Medium</title>
+  ${head.outerHtml}
+</head>
+<body>
+  $contentInsideFirstDiv
+</body>
+</html>
+''';
+
+      // 计算内容长度
+      int contentLength = finalHtml.length;
+
+      // 返回最终的响应
+      return Response(
+        statusCode: 200,
+        body: finalHtml,
+        headers: {
+          'Content-Type': 'text/html',
+          'Content-Length': contentLength.toString(),
+          'Connection': 'close',
+        },
+      );
+    }
   } else {
     print('未能找到指定的HTML部分');
   }
