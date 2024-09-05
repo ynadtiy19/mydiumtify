@@ -63,7 +63,38 @@ Future<Response> onRequest(RequestContext context) async {
   //运行fetchHtmlContent
   await fetchHtmlContent();
 //isok🎉🎉🎉
+  Document document = parse(uuu);
 
+  // 提取<head>部分
+  Element? head = document.head;
+
+  // 如果<head>存在，删除指定的<link>标签
+  if (head != null) {
+    // 查找<head>中的所有<link>标签
+    List<Element> linkTags = head.querySelectorAll('link');
+
+    // 定义需要删除的<link>标签的href属性
+    List<String> linkToRemove = [
+      "https://glyph.medium.com/css/unbound.css",
+      "/apple-touch-icon.png",
+      "/favicon-32x32.png",
+      "/favicon-16x16.png",
+      "/site.webmanifest",
+      "/safari-pinned-tab.svg"
+    ];
+
+    // 删除匹配的<link>标签
+    for (var linkTag in linkTags) {
+      String? href = linkTag.attributes['href'];
+
+      if (href != null) {
+        // 判断是否为相对路径或绝对路径，且在 linkToRemove 列表中
+        if (linkToRemove.any((link) => href.endsWith(link))) {
+          linkTag.remove(); // 删除匹配的link标签
+        }
+      }
+    }
+  }
   // 提取<body>部分的直接子元素
   Element? body = document.body;
   Element? fourthDiv;
