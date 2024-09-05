@@ -77,6 +77,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   return Response.json(
     body: result,
+    headers: {'Content-Type': 'application/json'},
     statusCode: result['success'] == true ? 200 : 500,
   );
 }
