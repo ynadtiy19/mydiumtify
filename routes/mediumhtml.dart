@@ -155,14 +155,64 @@ Future<Response> onRequest(RequestContext context) async {
 
       // 组合成新的HTML
       String finalHtml = '''
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>🎉🎉🎉Medium</title>
-  ${head.outerHtml}
+    ${head.outerHtml}
+    <script src="https://cdn.amcapi.com/localization/1.0.1/cloudlocalization.min.js" crossorigin="anonymous"></script>
+    <script>
+        cloudLocalization({
+            defaultLanguage: "en",
+            urlLanguageLocation: UrlLanguageLocation.none,
+            translatorProvider: TranslatorProvider.none,
+            translatorProviderKey: "",
+            logTranslationsFromProvider: false,
+            languages: [
+                {
+                    code: "de",
+                    displayName: "德语"
+                },
+                {
+                    code: "da",
+                    displayName: "丹麦语"
+                },
+                {
+                    code: "nl",
+                    displayName: "荷兰语"
+                },
+                {
+                    code: "en",
+                    displayName: "英语"
+                },
+                {
+                    code: "zh-CN",
+                    displayName: "中文（简体）"
+                }
+                {
+                    code: "es",
+                    displayName: "西班牙"
+                },
+                {
+                    code: "fr",
+                    displayName: "法语"
+                },
+                {
+                    code: "fr-ca",
+                    displayName: "加拿大语"
+                },
+                {
+                    code: "ar",
+                    displayName: "阿拉伯语",
+                    direction: LanguageDirection.rtl
+                }
+            ]
+        });
+    </script>
 </head>
 <body>
-  ${document.body?.innerHtml}
+    ${document.body?.innerHtml}
+    <select class="cloudlocalization-selection"></select>
 </body>
 </html>
 ''';
