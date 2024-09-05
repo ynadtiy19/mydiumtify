@@ -97,6 +97,7 @@ Future<Response> onRequest(RequestContext context) async {
   if (head != null && fourthDiv != null) {
     // 组合成新的HTML
     String newHtml = '''
+     <!DOCTYPE html>
 <html lang="en">
 <head>
   ${head.outerHtml}
