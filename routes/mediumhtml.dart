@@ -124,8 +124,12 @@ Future<Response> onRequest(RequestContext context) async {
   if (head != null && fourthDiv != null) {
     // 组合成新的HTML
     String newHtml = '''
+     <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉🎉🎉Medium</title>
   ${head.outerHtml}
 </head>
 <body>
