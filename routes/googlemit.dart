@@ -9,7 +9,7 @@ class TranslationService {
   static const _userAgent =
       'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:47.0) Gecko/20100101 Firefox/47.0';
 
-  Future<Map<String, dynamic>> translate({
+  Future<String?> translate({
     required String text,
     String toLang = 'auto',
     String fromLang = 'auto',
@@ -24,28 +24,16 @@ class TranslationService {
       );
 
       if (response.statusCode != 200) {
-        return {
-          'success': false,
-          'data': null,
-          'error_message': 'A problem has occurred on our end',
-        };
+        return null;
       }
 
       final soup = BeautifulSoup(response.body);
       final translatedText =
           soup.find('div', class_: 'result-container')?.text ?? '';
 
-      return {
-        'success': true,
-        'data': translatedText,
-        'error_message': null,
-      };
+      return translatedText;
     } catch (e) {
-      return {
-        'success': false,
-        'data': null,
-        'error_message': 'An error occurred: $e',
-      };
+      return null;
     }
   }
 }
@@ -76,8 +64,7 @@ Future<Response> onRequest(RequestContext context) async {
   );
 
   return Response.json(
-    body: result,
+    body: {'success': true, 'data': result, 'error_message': null},
     headers: {'Content-Type': 'application/json'},
-    statusCode: result['success'] == true ? 200 : 500,
   );
 }

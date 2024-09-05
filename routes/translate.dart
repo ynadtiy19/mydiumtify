@@ -32,7 +32,7 @@ Future<Response> onRequest(RequestContext context) async {
 // 翻译函数，heroapi-6xl7.onrender.com
   Future<String> translateText(String text, String targetLanguage) async {
     const apiUrl =
-        'https://mydiumtify.globeapp.dev/googlemit'; //https://mydiumtify.globeapp.dev/googlemit?text=There%27s%20a%20problem%20with%20that%20%27bullet%20in%20flight%27%20photo%20of%20Trump.%20Reporting%20a%20Problem%20The%20bullet%20seems%20to%20be%20flying%20about%20twice%20as%20fast%20as%20it%20%27should%27%20have%20been.%20What%20if%20there%27s%20a%20mistake?%20Update%201:%20The%20EXIF%20Data%20Update%202:%20A%20note%20on%20the%20angle&to_lang=ru&from_lang=auto
+        'https://heroapi-1.onrender.com/api/translate'; //https://mydiumtify.globeapp.dev/googlemit?text=There%27s%20a%20problem%20with%20that%20%27bullet%20in%20flight%27%20photo%20of%20Trump.%20Reporting%20a%20Problem%20The%20bullet%20seems%20to%20be%20flying%20about%20twice%20as%20fast%20as%20it%20%27should%27%20have%20been.%20What%20if%20there%27s%20a%20mistake?%20Update%201:%20The%20EXIF%20Data%20Update%202:%20A%20note%20on%20the%20angle&to_lang=ru&from_lang=auto
     Map<String, String> queryParams = {
       'text': text,
       'to_lang': targetLanguage,
@@ -44,7 +44,8 @@ Future<Response> onRequest(RequestContext context) async {
     try {
       http.Response response = await http.get(Uri.parse(requestUrl));
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        Map<String, dynamic> data =
+            json.decode(response.body) as Map<String, dynamic>;
         if (data['success'] == true) {
           return data['data'] as String? ?? '';
         } else {
