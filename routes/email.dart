@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 const String emailApiUrl = 'https://freeemailapi.vercel.app/sendEmail/';
 
 Future<Response> onRequest(RequestContext context) async {
-  //send-email
   // 检查请求方法是否为 POST
   if (context.request.method == HttpMethod.post) {
     try {
@@ -14,7 +13,9 @@ Future<Response> onRequest(RequestContext context) async {
       final body = await context.request.json() as Map<String, dynamic>;
 
       // 检查请求体是否包含所需的字段
-      if (!body.containsKey('toEmail') ||
+      if (!body.containsKey('fromEmail') ||
+          !body.containsKey('passkey') ||
+          !body.containsKey('toEmail') ||
           !body.containsKey('title') ||
           !body.containsKey('subject') ||
           !body.containsKey('body')) {
@@ -27,6 +28,8 @@ Future<Response> onRequest(RequestContext context) async {
         Uri.parse(emailApiUrl),
         headers: {"Content-Type": "application/json"},
         body: json.encode({
+          'fromEmail': body['fromEmail'],
+          'passkey': body['passkey'],
           'toEmail': body['toEmail'],
           'title': body['title'],
           'subject': body['subject'],
