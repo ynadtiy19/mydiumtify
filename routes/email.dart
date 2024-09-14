@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 const String emailApiUrl = 'https://freeemailapi.vercel.app/sendEmail/';
 
 Future<Response> onRequest(RequestContext context) async {
+  //email
   // 检查请求方法是否为 POST
   if (context.request.method == HttpMethod.post) {
     try {
