@@ -17,5 +17,5 @@ Future<Response> onRequest(RequestContext context) async {
   print(apiUrl);
 
   final response = await http.get(Uri.parse(apiUrl));
-  return Response(body: '$response');
+  return Response.json(body: response);
 }
