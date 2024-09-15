@@ -8,10 +8,9 @@ import 'package:mime/mime.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   // Replace with your actual API key and model name
-  final apiKey = 'AIzaSyD8pA32k91ftgHbqvBto6jj7HIo_LPeRVk';
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
-    apiKey: apiKey,
+    apiKey: 'AIzaSyD8pA32k91ftgHbqvBto6jj7HIo_LPeRVk',
   );
 
   if (context.request.method == HttpMethod.post) {
