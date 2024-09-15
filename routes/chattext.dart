@@ -14,12 +14,11 @@ Future<Response> onRequest(RequestContext context) async {
   );
   final chat = model.startChat();
 
-  final prompt = '$query';
   var responseBody;
 
-  if (prompt.isNotEmpty) {
+  if (query.isNotEmpty) {
     try {
-      final response = await chat.sendMessage(Content.text(prompt));
+      final response = await chat.sendMessage(Content.text(query));
       responseBody = response.text;
     } catch (e) {
       print('Error: $e');
