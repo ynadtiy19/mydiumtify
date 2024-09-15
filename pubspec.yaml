@@ -11,7 +11,7 @@ dependencies:
   html: ^0.15.4
   http: ^1.2.1
   json_path: ^0.7.2
-  google_generative_ai: ^0.4.5
+  google_generative_ai: ^0.4.6
   beautiful_soup_dart: ^0.3.0
 
 dev_dependencies:
