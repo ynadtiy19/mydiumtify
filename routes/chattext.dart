@@ -20,7 +20,9 @@ Future<Response> onRequest(RequestContext context) async {
       responseBody = response.text;
     } catch (e) {
       print('Error: $e');
-      responseBody = {'error': 'Failed to generate content and $e'};
+      responseBody = {
+        'error': 'Failed to generate content and $e'
+      }; //UnsupportedUserLocation
     }
   } else {
     responseBody = 'This is a new route!';
