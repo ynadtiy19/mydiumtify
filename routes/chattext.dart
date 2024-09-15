@@ -17,13 +17,8 @@ Future<Response> onRequest(RequestContext context) async {
   var responseBody;
 
   if (query.isNotEmpty) {
-    try {
-      final response = await chat.sendMessage(Content.text(query));
-      responseBody = response.text;
-    } catch (e) {
-      print('Error: $e');
-      responseBody = {'error': 'Failed to generate content and $e'};
-    }
+    final response = await chat.sendMessage(Content.text(query));
+    responseBody = response.text;
   } else {
     responseBody = 'This is a new route!';
   }
