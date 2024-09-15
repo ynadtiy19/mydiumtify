@@ -6,7 +6,7 @@ Future<Response> onRequest(RequestContext context) async {
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
 
-  final apiKey = 'AIzaSyCGGBq3APIQsWqHh9Rg9ZUC5zqpW0d5kYc';
+  const apiKey = 'AIzaSyCGGBq3APIQsWqHh9Rg9ZUC5zqpW0d5kYc';
 
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
@@ -22,7 +22,7 @@ Future<Response> onRequest(RequestContext context) async {
       responseBody = response.text;
     } catch (e) {
       print('Error: $e');
-      responseBody = {'error': 'Failed to generate content'};
+      responseBody = {'error': 'Failed to generate content and $e'};
     }
   } else {
     responseBody = 'This is a new route!';
