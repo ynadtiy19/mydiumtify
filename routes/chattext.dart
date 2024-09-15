@@ -33,11 +33,16 @@ Future<Response> onRequest(RequestContext context) async {
     try {
       final response = await chat.sendMessage(Content.text(query));
       responseBody = response.text;
-    } catch (e) {
+    } catch (e, stackTrace) {
+      // 打印错误信息和堆栈轨迹
       print('Error: $e');
+      print('Stack Trace: $stackTrace'); // 打印调用堆栈
+
+      // 可以根据异常的类型自定义错误响应
       responseBody = {
-        'error': 'Failed to generate content and $e', // 错误信息
-      }; //UnsupportedUserLocation
+        'error': 'Failed to generate content: $e', // 错误信息
+        'stackTrace': stackTrace.toString(), // 可选：将堆栈轨迹信息包含进响应中
+      };
     }
   } else {
     responseBody = 'This is a new route!';
