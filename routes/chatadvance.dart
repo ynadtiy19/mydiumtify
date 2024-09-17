@@ -7,7 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:mime/mime.dart';
 
 Future<Response> onRequest(RequestContext context) async {
-  // Replace with your actual API key and model name
+  //https://mydiumtify.globeapp.dev/chatadvance?q=${Uri.encodeComponent(text)}
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
     apiKey: 'AIzaSyD8pA32k91ftgHbqvBto6jj7HIo_LPeRVk',

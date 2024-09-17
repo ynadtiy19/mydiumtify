@@ -51,7 +51,7 @@ Response onRequest(RequestContext context) {
     <script>
         const storylyWeb = document.querySelector('storyly-web');
         storylyWeb.init({
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE4MzIxLCJpbnNfaWQiOjIwNTI2fQ.FHJVwRk7NB2nseZdWQFzunqahPPVoPkFRr47aB0MdhU",
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NfaWQiOjEyMTM2LCJhcHBfaWQiOjE4NzU4LCJpbnNfaWQiOjIxMDgzfQ.Z1-47m5pTa3NiLNKpVcGJUw1N9ANOfxOS_QsKKIK1AA",
         });
     </script>
 <script>
