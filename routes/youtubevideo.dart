@@ -2,7 +2,6 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
-  //youtubevideo
   const url =
       'https://api.github.com/repos/ynadtiy19/youtubewords/contents/README.md';
 
@@ -34,23 +33,19 @@ Future<Response> onRequest(RequestContext context) async {
     }
 
     print(result);
+
     // Map 来存储最终的跳转链接
     final finalLinks = <String, String>{};
 
     // 遍历每个链接，获取最终跳转链接
     for (var entry in result.entries) {
-      final videoResponse = await http.head(Uri.parse(entry.value));
-
-      if (videoResponse.statusCode == 302 || videoResponse.statusCode == 301) {
-        // 获取跳转链接
+      try {
+        final videoResponse = await http.get(Uri.parse(entry.value));
         final finalUrl = videoResponse.headers['location'];
-        if (finalUrl != null) {
-          finalLinks[entry.key] = finalUrl; // 将最终链接保存到 finalLinks
-        } else {
-          finalLinks[entry.key] = 'No redirect found';
-        }
-      } else {
-        finalLinks[entry.key] = 'Error fetching final URL';
+        finalLinks[entry.key] = finalUrl!;
+      } catch (e) {
+        // 捕获异常并存储错误信息
+        finalLinks[entry.key] = 'Error fetching final URL: $e';
       }
     }
 
