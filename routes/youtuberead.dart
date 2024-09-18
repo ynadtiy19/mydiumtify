@@ -4,11 +4,9 @@ import 'package:http/http.dart' as http;
 Future<Response> onRequest(RequestContext context) async {
   //youtuberead?repo=uu1
   final queryParams = context.request.uri.queryParameters;
-  final text = queryParams['repo'] ?? 'uu1';
+  final repo = queryParams['repo'] ?? 'uu1';
   final url =
-      'https://api.github.com/repos/ynadtiy19/youtubewords/contents/$text';
-//写入令牌  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
-  // 要求 GitHub API
+      'https://api.github.com/repos/ynadtiy19/youtubewords/contents/$repo';
   final response = await http.get(
     Uri.parse(url),
     headers: {
