@@ -8,6 +8,10 @@ Future<Response> onRequest(RequestContext context) async {
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
 
+  // 在此处添加逻辑以隐藏IP地址
+  final headers = context.request.headers;
+  headers.remove('X-Forwarded-For'); // 移除可能的IP头部
+
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
     apiKey: 'AIzaSyCGGBq3APIQsWqHh9Rg9ZUC5zqpW0d5kYc',
@@ -21,21 +25,17 @@ Future<Response> onRequest(RequestContext context) async {
       final response = await chat.sendMessage(Content.text(query));
       responseBody = response.text;
     } catch (e, stackTrace) {
-      // 打印错误信息和堆栈轨迹
       print('Error: $e');
-      print('Stack Trace: $stackTrace'); // 打印调用堆栈
-
-      // 可以根据异常的类型自定义错误响应
+      print('Stack Trace: $stackTrace');
       responseBody = {
-        'error': 'Failed to generate content: $e', // 错误信息
-        'stackTrace': stackTrace.toString(), // 可选：将堆栈轨迹信息包含进响应中
+        'error': 'Failed to generate content: $e',
+        'stackTrace': stackTrace.toString(),
       };
     }
   } else {
     responseBody = 'This is a new route!';
   }
 
-  // 返回响应并包含 CORS 头
   return Response.json(
     body: {"isSender": false, "text": responseBody},
   );
