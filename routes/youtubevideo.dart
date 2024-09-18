@@ -33,6 +33,7 @@ Future<Response> onRequest(RequestContext context) async {
       }
     }
 
+    print(result);
     // Map 来存储最终的跳转链接
     final finalLinks = <String, String>{};
 
