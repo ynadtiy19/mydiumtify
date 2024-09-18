@@ -62,12 +62,13 @@ Future<HttpServer> run(Handler handler, InternetAddress ip, int port) {
     }
   }
 
-  Timer.periodic(Duration(minutes: 5), (Timer timer) async {
+  Timer.periodic(Duration(minutes: 1), (Timer timer) async {
     await fetchTranslation();
   });
-  // 1. Execute any custom code prior to starting the server...
 
-  // 2. Use the provided `handler`, `ip`, and `port` to create a custom `HttpServer`.
-  // Or use the Dart Frog serve method to do that for you.
-  return serve(handler, ip, port);
+  const customStaticFilePath = 'api/'; //指定项目根目录下面的放置文件资产的目录
+  final cascade = Cascade()
+      .add(createStaticFileHandler(path: customStaticFilePath))
+      .add(handler);
+  return serve(cascade.handler, ip, port);
 }
