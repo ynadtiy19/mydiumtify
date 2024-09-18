@@ -8,10 +8,6 @@ Future<Response> onRequest(RequestContext context) async {
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
 
-  // 在此处添加逻辑以隐藏IP地址
-  final headers = context.request.headers;
-  headers.remove('X-Forwarded-For'); // 移除可能的IP头部
-
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
     apiKey: 'AIzaSyCGGBq3APIQsWqHh9Rg9ZUC5zqpW0d5kYc',
