@@ -41,8 +41,9 @@ Future<Response> onRequest(RequestContext context) async {
     for (var entry in result.entries) {
       try {
         final videoResponse = await http.get(Uri.parse(entry.value));
-        final finalUrl = videoResponse.headers['location'];
-        finalLinks[entry.key] = finalUrl!;
+        final finalUrl = videoResponse.headers;
+        print(finalUrl);
+        // finalLinks[entry.key] = finalUrl!;
       } catch (e) {
         // 捕获异常并存储错误信息
         finalLinks[entry.key] = 'Error fetching final URL: $e';
