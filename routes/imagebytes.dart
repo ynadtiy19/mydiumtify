@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,11 +37,12 @@ Future<Response> onRequest(RequestContext context) async {
 
       // 请求选定的图片链接
       final imageResponse = await http.get(Uri.parse(randomLink));
+      final base64 = base64Encode(imageResponse.bodyBytes);
 
       if (imageResponse.statusCode == 200) {
         // 返回图片的二进制数据
-        return Response.bytes(
-          body: imageResponse.bodyBytes,
+        return Response(
+          body: base64,
         );
       } else {
         return Response.json(
