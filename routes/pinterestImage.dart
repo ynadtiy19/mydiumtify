@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
+  //https://mydiumtify.globeapp.dev/pinterestImage?isImage=true&url=https://i.pinimg.com/originals/7d/41/80/7d41806124b7cfe34a4b850c7bf435df.jpg
   final queryParams = context.request.uri.queryParameters;
   final url = queryParams['url'] ?? 'beautiful nature image';
   Object isImage = queryParams['isImage'] ?? false;
