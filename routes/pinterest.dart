@@ -25,7 +25,7 @@ class PinterestScraper {
   final List<Map<String, dynamic>> collectionItems = [];
 
   final String cookie =
-      'csrftoken=97b01583d6330b33b7e72656a4d5ed1c; _pinterest_sess=...';
+      'csrftoken=97b01583d6330b33b7e72656a4d5ed1c; _pinterest_sess=TWc9PSZSNnhlV2xkTWpGTFltVVEvQkRBbmxDWlRPcEx6MEhSdGRYR3g0ZmJaWUk5WVVXakQwS29Ia0F1RGZiYlpSdXByTy9mckF5dDRzTG9sU2FYV3ZlbXZNUFpDOFpqYVB1c1FYV2oxWk15MEQyTT0meU1oTWZRSGR5Q1Z6Zjd5bXc0a0gvejFPR1R3PQ==; _auth=0; _routing_id="b5a67db2-93e5-4513-ab31-05ca021c6667"; sessionFunnelEventLogged=1';
   final String xCrsftoken = '97b01583d6330b33b7e72656a4d5ed1c';
 
   PinterestScraper(
