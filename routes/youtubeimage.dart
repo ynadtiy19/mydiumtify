@@ -32,6 +32,9 @@ Future<Response> onRequest(RequestContext context) async {
     // 随机选择一个链接
     if (result.isNotEmpty) {
       final randomLink = (result.values.toList()..shuffle()).first; //生成随机第一位链接
+      print(randomLink);
+      print('4545');
+      print(result);
 
       // 请求选定的图片链接
       final imageResponse = await http.get(Uri.parse(randomLink));
