@@ -4,7 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
-  // 获取传递的 query 参数
+  // https://mydiumtify.globeapp.dev/pinterest?query=&numberOfImages=5
   final queryParams = context.request.uri.queryParameters;
   final query = queryParams['query'] ?? 'beautiful nature image';
   final numberOfImages =
