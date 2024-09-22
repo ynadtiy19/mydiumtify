@@ -11,8 +11,6 @@ Future<Response> onRequest(RequestContext context) async {
   try {
     // 请求选定的图片链接
     final imageResponse = await http.get(Uri.parse(url));
-    final base64 = base64Encode(imageResponse.bodyBytes);
-
     if (imageResponse.statusCode == 200 && isImage == true) {
       final contentType = imageResponse.headers['content-type'] ?? 'image/jpeg';
       // 返回图片的二进制数据
