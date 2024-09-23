@@ -36,7 +36,7 @@ Future<Response> onRequest(RequestContext context) async {
   try {
     final response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200) {
-      final jsonResponse = jsonEncode(response.body);
+      final jsonResponse = jsonDecode(response.body);
       return Response.json(body: jsonResponse);
     } else {
       return Response.json(
