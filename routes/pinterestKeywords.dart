@@ -4,18 +4,20 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
-  // https://mydiumtify.globeapp.dev/pinterestKeywords?query=beautiful%20nature%20image
+  // https://mydiumtify.globeapp.dev/pinterestKeywords?query=..&sortBy=volume
   final queryParams = context.request.uri.queryParameters;
-  final query = queryParams['query'] ?? 'beautiful nature image';
+  final searchTerm = queryParams['query'] ?? 'beautiful nature image';
+  final sortBy = queryParams['sortBy'] ?? 'volume';
 
   final url = Uri.parse(
       'https://europe-west3-pingenerator-43a15.cloudfunctions.net/api/pinterestAPI/findSuggestedKeywordsAndVolumes');
   final body = jsonEncode({
     'access_token':
         'pina_AEAZ25IWAA5LMAQAGAAGWDLHDQHB5EQBACGSPVM3JRBPEGPCCOQIRATVA5SYZL6FCBQODM5CCOIGMJPYY4ANU6DWPMPTYOQA',
-    'searchTerm': query,
-    'sortBy': 'volume'
+    'searchTerm': searchTerm,
+    'sortBy': sortBy
   });
+  //volume,relevance,competition,trend
   // 请求头
   final headers = {
     'Content-Type': 'application/json',
