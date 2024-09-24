@@ -37,11 +37,11 @@ Future<Response> onRequest(RequestContext context) async {
         return response.body;
       } else {
         // 如果响应状态码不是 200，返回 null
-        return null;
+        throw Exception('Failed to load data: ${response.statusCode}');
       }
     } catch (e) {
       // 如果发生任何错误，返回 null
-      return null;
+      return e.toString();
     }
   }
 
