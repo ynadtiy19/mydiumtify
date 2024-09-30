@@ -67,19 +67,23 @@ Future<Response> onRequest(RequestContext context) async {
 
   // 提取<head>部分===>>删除不能访问的js和css文件
   Element? head = document.head;
-  // 如果<head>存在，删除指定的<link>标签
+
+// 如果<head>存在，删除指定的<link>和<script>标签
   if (head != null) {
     // 查找<head>中的所有<link>标签
     List<Element> linkTags = head.querySelectorAll('link');
+    List<Element> scriptTags = head.querySelectorAll('script');
 
-    // 定义需要删除的<link>标签的href属性
+    // 定义需要删除的<link>和<script>标签的href/src属性
     List<String> linkToRemove = [
-      "https://glyph.medium.com/css/unbound.css",
-      "/apple-touch-icon.png",
-      "/favicon-32x32.png",
-      "/favicon-16x16.png",
-      "/site.webmanifest",
-      "/safari-pinned-tab.svg"
+      'https://glyph.medium.com/css/unbound.css',
+      '/apple-touch-icon.png',
+      '/favicon-32x32.png',
+      '/favicon-16x16.png',
+      '/site.webmanifest',
+      '/safari-pinned-tab.svg',
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js',
+      'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css'
     ];
 
     // 删除匹配的<link>标签
@@ -89,7 +93,19 @@ Future<Response> onRequest(RequestContext context) async {
       if (href != null) {
         // 判断是否为相对路径或绝对路径，且在 linkToRemove 列表中
         if (linkToRemove.any((link) => href.endsWith(link))) {
-          linkTag.remove(); // 删除匹配的link标签
+          linkTag.remove(); // 删除匹配的<link>标签
+        }
+      }
+    }
+
+    // 删除匹配的<script>标签
+    for (var scriptTag in scriptTags) {
+      String? src = scriptTag.attributes['src'];
+
+      if (src != null) {
+        // 判断是否为相对路径或绝对路径，且在 linkToRemove 列表中
+        if (linkToRemove.any((link) => src.endsWith(link))) {
+          scriptTag.remove(); // 删除匹配的<script>标签
         }
       }
     }

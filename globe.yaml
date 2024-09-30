@@ -1,0 +1,4 @@
+crons:
+  - id: check_and_notify_translate
+    schedule: '*/7 * * * *'
+    path: '/carmirest'
