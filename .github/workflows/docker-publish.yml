@@ -1,0 +1,51 @@
+name: Dart Compile and Build
+
+# 当推送到 main 分支时触发
+on:
+  push:
+    branches: 
+      - main 
+
+# 工作流的步骤
+jobs:
+  build:
+    # 使用 Docker 运行 CentOS
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: 检出代码
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: 设置 Dart SDK
+    - name: Set up Dart SDK
+      uses: dart-lang/setup-dart@v1
+      with:
+        sdk: stable
+
+    # Step 3: 安装依赖
+    - name: Install dependencies
+      run: dart pub get
+
+    # Step 4: 使用 Docker 构建 CentOS 环境并编译 Dart 程序
+    - name: Compile to executable in CentOS
+      run: |
+        docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -w /workspace \
+          centos:7 \
+          /bin/bash -c "
+            yum install -y epel-release && \
+            yum install -y git curl && \
+            curl -fsSL https://dl.google.com/dartlang/linux/debian/dart_stable.list > /etc/yum.repos.d/dart_stable.list && \
+            yum install -y dart && \
+            dart pub get && \
+            dart compile exe bin/server.dart -o bin/server
+          "
+
+    # Step 5: 归档生成的二进制文件
+    - name: Upload compiled binary
+      uses: actions/upload-artifact@v3
+      with:
+        name: server
+        path: build/bin/server
