@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http; // For making HTTP requests
 
 Future<Response> onRequest(RequestContext context) async {
+  //https://mydiumtify.globeapp.dev/myfilebase?url=${Uri.encodeComponent(text)}
   // 从查询参数中获取 url
   final queryParams = context.request.uri.queryParameters;
   final url = queryParams['url'];
