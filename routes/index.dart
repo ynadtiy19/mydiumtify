@@ -155,11 +155,11 @@ Response onRequest(RequestContext context) {
 // ''',
     body: '''<!DOCTYPE html>
 <html lang="zh-CN">
-<head> 
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>视频数据分析</title>
-    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<head>  
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>视频数据分析</title>  
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script> 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -221,6 +221,7 @@ Response onRequest(RequestContext context) {
     <button id="fetchButton">确认</button>
     <div id="dropArea">拖放 JSON 文件到这里</div>
     <div id="viewsChart" class="chart"></div>
+    <div id="viewsBarChart" class="chart"></div>
     <div id="influenceChart" class="chart"></div>
     <div id="interactionChart" class="chart"></div>
     <script>
@@ -242,9 +243,47 @@ Response onRequest(RequestContext context) {
             }
         }
 
-        // 渲染视频观看量柱状图
+        // 渲染视频播放量饼图
         function renderViewsChart(videoData) {
             const chartDom = document.getElementById('viewsChart');
+            const myChart = echarts.init(chartDom);
+
+            const titles = videoData.map(video => video.title);
+            const views = videoData.map(video => video.stat.view);
+
+            const option = {
+                title: {
+                    text: '视频播放量饼图',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}: {c} ({d}%)' // 显示名称、值和百分比
+                },
+                series: [{
+                    name: '播放量',
+                    type: 'pie',
+                    radius: '50%',
+                    data: titles.map((title, index) => ({
+                        name: title,
+                        value: views[index]
+                    })),
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }]
+            };
+
+            myChart.setOption(option);
+        }
+
+        // 渲染视频播放量柱状图
+        function renderViewsBarChart(videoData) {
+            const chartDom = document.getElementById('viewsBarChart');
             const myChart = echarts.init(chartDom);
 
             const titles = videoData.map(video => video.title);
@@ -256,9 +295,8 @@ Response onRequest(RequestContext context) {
                     left: 'center'
                 },
                 tooltip: {
-                    position: function (point) {
-                        return [point[0], point[1] - 50]; // 向上偏移 50px
-                    }
+                    trigger: 'item',
+                    formatter: '{b}: {c} ({d}%)' // 显示名称、值和百分比
                 },
                 xAxis: {
                     type: 'category',
@@ -274,8 +312,8 @@ Response onRequest(RequestContext context) {
                     type: 'bar',
                     data: views,
                     itemStyle: {
-                        color: '#5470C6',
-                    },
+                        color: '#5470C6'
+                    }
                 }]
             };
 
@@ -290,11 +328,19 @@ Response onRequest(RequestContext context) {
             const upUsers = {};
             videoData.forEach(video => {
                 const user = video.owner.name;
-                upUsers[user] = (upUsers[user] || 0) + video.stat.view;
+                const viewCount = Math.min(video.stat.view, 5000000); // 最大限制为500万
+                upUsers[user] = (upUsers[user] || 0) + viewCount;
             });
 
             const userTitles = Object.keys(upUsers);
             const userViews = Object.values(upUsers);
+
+            const totalViews = userViews.reduce((acc, val) => acc + val, 0); // 计算总播放量
+            const userData = userTitles.map((title, index) => ({
+                name: title,
+                value: userViews[index],
+                percentage: ((userViews[index] / totalViews) * 100).toFixed(2) // 计算百分比
+            }));
 
             const option = {
                 title: {
@@ -302,16 +348,19 @@ Response onRequest(RequestContext context) {
                     left: 'center'
                 },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: (params) => {
+                        const user = params.name;
+                        const viewCount = params.value;
+                        const percentage = ((viewCount / totalViews) * 100).toFixed(2);
+                        return `${user}: ${viewCount} (${percentage}%)`;
+                    }
                 },
                 series: [{
                     name: 'UP主',
                     type: 'pie',
                     radius: '50%',
-                    data: userTitles.map((title, index) => ({
-                        name: title,
-                        value: userViews[index]
-                    })),
+                    data: userData,
                     emphasis: {
                         itemStyle: {
                             shadowBlur: 10,
@@ -394,55 +443,53 @@ Response onRequest(RequestContext context) {
             videoData = await fetchVideoData(url);
             if (videoData) {
                 renderViewsChart(videoData);
+                renderViewsBarChart(videoData); // 添加柱状图渲染
                 renderInfluenceChart(videoData);
                 renderInteractionChart(videoData);
             }
         }
 
-        // 点击确认按钮
+        // 页面加载时调用主函数
+        window.onload = () => {
+            main(defaultUrl); // 从默认 URL 获取数据
+        };
+
+        // 事件处理
         document.getElementById('fetchButton').addEventListener('click', () => {
-            const url = document.getElementById('urlInput').value.trim() || defaultUrl;
+            const url = document.getElementById('urlInput').value || defaultUrl;
             main(url);
         });
 
-        // 拖放处理
+        // 拖放区域处理
         const dropArea = document.getElementById('dropArea');
-
         dropArea.addEventListener('dragover', (event) => {
-            event.preventDefault(); // 防止默认的行为
+            event.preventDefault();
             dropArea.classList.add('hover');
         });
-
         dropArea.addEventListener('dragleave', () => {
             dropArea.classList.remove('hover');
         });
-
         dropArea.addEventListener('drop', async (event) => {
-            event.preventDefault(); // 防止默认的行为
+            event.preventDefault();
             dropArea.classList.remove('hover');
-            const files = event.dataTransfer.files;
-            if (files.length > 0) {
-                const file = files[0];
-                if (file.type === 'application/json') {
-                    const reader = new FileReader();
-                    reader.onload = async (e) => {
-                        const jsonData = JSON.parse(e.target.result);
-                        videoData = jsonData; // 更新视频数据
-                        renderViewsChart(videoData);
-                        renderInfluenceChart(videoData);
-                        renderInteractionChart(videoData);
-                    };
-                    reader.readAsText(file);
-                } else {
-                    alert('请上传有效的 JSON 文件');
-                }
+            const file = event.dataTransfer.files[0];
+            if (file && file.type === 'application/json') {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    const jsonData = JSON.parse(e.target.result);
+                    videoData = jsonData; // 直接将 JSON 数据赋值给 videoData
+                    renderViewsChart(videoData);
+                    renderViewsBarChart(videoData); // 添加柱状图渲染
+                    renderInfluenceChart(videoData);
+                    renderInteractionChart(videoData);
+                };
+                reader.readAsText(file);
+            } else {
+                alert('请拖放一个有效的 JSON 文件。');
             }
         });
-
-        // 默认加载数据
-        main(defaultUrl);
-    </script> 
-</body>  
+    </script>
+</body>
 </html>
 ''',
     headers: {'Content-Type': 'text/html'},
