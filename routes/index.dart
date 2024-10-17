@@ -155,9 +155,9 @@ Response onRequest(RequestContext context) {
 // ''',
     body: '''<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head> 
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>视频数据分析</title>
     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
     <style>
@@ -196,18 +196,33 @@ Response onRequest(RequestContext context) {
             height: 400px;
             margin-bottom: 40px;
         }
+        #dropArea {
+            width: 300px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #aaa;
+            cursor: pointer;
+        }
+        #dropArea.hover {
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
     <h1>视频数据分析</h1>
-    <div id="message">请输入视频数据的 URL:</div>
+    <div id="message">请输入视频数据的 URL 或拖放 JSON 文件:</div>
     <input type="text" id="urlInput" placeholder="请输入 URL">
     <button id="fetchButton">确认</button>
-
+    <div id="dropArea">拖放 JSON 文件到这里</div>
     <div id="viewsChart" class="chart"></div>
     <div id="influenceChart" class="chart"></div>
     <div id="interactionChart" class="chart"></div>
-    
     <script>
         let videoData = []; // 存储视频数据
         const defaultUrl = 'https://api.npoint.io/0f9fe90f986b0245b107'; // 默认 URL
@@ -390,10 +405,44 @@ Response onRequest(RequestContext context) {
             main(url);
         });
 
+        // 拖放处理
+        const dropArea = document.getElementById('dropArea');
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault(); // 防止默认的行为
+            dropArea.classList.add('hover');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('hover');
+        });
+
+        dropArea.addEventListener('drop', async (event) => {
+            event.preventDefault(); // 防止默认的行为
+            dropArea.classList.remove('hover');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type === 'application/json') {
+                    const reader = new FileReader();
+                    reader.onload = async (e) => {
+                        const jsonData = JSON.parse(e.target.result);
+                        videoData = jsonData; // 更新视频数据
+                        renderViewsChart(videoData);
+                        renderInfluenceChart(videoData);
+                        renderInteractionChart(videoData);
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert('请上传有效的 JSON 文件');
+                }
+            }
+        });
+
         // 默认加载数据
         main(defaultUrl);
-    </script>
-</body>
+    </script> 
+</body>  
 </html>
 ''',
     headers: {'Content-Type': 'text/html'},
