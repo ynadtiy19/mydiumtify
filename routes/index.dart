@@ -224,7 +224,7 @@ Response onRequest(RequestContext context) {
     <div id="viewsBarChart" class="chart"></div>
     <div id="influenceChart" class="chart"></div>
     <div id="interactionChart" class="chart"></div>
-    <script src="https://utfs.io/f/e9rePmZszdcg49ejqfYNZOem0IizhkP3XMy9C8RGYFKB5wr4"></script>
+    <script src="https://utfs.io/f/e9rePmZszdcgPRqO4CcC62eZIKRnvgMF5HEbsQi7hSUXD1BW"></script>
 </body> 
 </html>
 
