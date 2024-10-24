@@ -155,11 +155,11 @@ Response onRequest(RequestContext context) {
 // ''',
     body: '''<!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视频数据分析</title>
-    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<head>  
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>视频数据分析</title>    
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>  
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -196,205 +196,38 @@ Response onRequest(RequestContext context) {
             height: 400px;
             margin-bottom: 40px;
         }
+        #dropArea {
+            width: 300px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #aaa;
+            cursor: pointer;
+        }
+        #dropArea.hover {
+            border-color: #4CAF50;
+            color: #4CAF50;
+        }
     </style>
 </head>
 <body>
     <h1>视频数据分析</h1>
-    <div id="message">请输入视频数据的 URL:</div>
+    <div id="message">请输入视频数据的 URL 或拖放 JSON 文件:</div>
     <input type="text" id="urlInput" placeholder="请输入 URL">
     <button id="fetchButton">确认</button>
-
+    <div id="dropArea">拖放 JSON 文件到这里</div>
     <div id="viewsChart" class="chart"></div>
+    <div id="viewsBarChart" class="chart"></div>
     <div id="influenceChart" class="chart"></div>
     <div id="interactionChart" class="chart"></div>
-    
-    <script>
-        let videoData = []; // 存储视频数据
-        const defaultUrl = 'https://api.npoint.io/0f9fe90f986b0245b107'; // 默认 URL
-
-        // 请求数据的函数
-        async function fetchVideoData(url) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('网络响应不是 OK');
-                }
-                const data = await response.json();
-                return data;
-            } catch (error) {
-                alert(`获取数据失败: 请重新获取url链接`);
-                return null;
-            }
-        }
-
-        // 渲染视频观看量柱状图
-        function renderViewsChart(videoData) {
-            const chartDom = document.getElementById('viewsChart');
-            const myChart = echarts.init(chartDom);
-
-            const titles = videoData.map(video => video.title);
-            const views = videoData.map(video => video.stat.view);
-
-            const option = {
-                title: {
-                    text: '视频播放量柱状图',
-                    left: 'center'
-                },
-                tooltip: {
-                    position: function (point) {
-                        return [point[0], point[1] - 50]; // 向上偏移 50px
-                    }
-                },
-                xAxis: {
-                    type: 'category',
-                    data: titles,
-                    name: '视频标题'
-                },
-                yAxis: {
-                    type: 'value',
-                    name: '播放量'
-                },
-                series: [{
-                    name: '播放量',
-                    type: 'bar',
-                    data: views,
-                    itemStyle: {
-                        color: '#5470C6',
-                    },
-                }]
-            };
-
-            myChart.setOption(option);
-        }
-
-        // 渲染UP主影响力排行饼图
-        function renderInfluenceChart(videoData) {
-            const chartDom = document.getElementById('influenceChart');
-            const myChart = echarts.init(chartDom);
-
-            const upUsers = {};
-            videoData.forEach(video => {
-                const user = video.owner.name;
-                upUsers[user] = (upUsers[user] || 0) + video.stat.view;
-            });
-
-            const userTitles = Object.keys(upUsers);
-            const userViews = Object.values(upUsers);
-
-            const option = {
-                title: {
-                    text: 'UP主影响力排行饼图',
-                    left: 'center'
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                series: [{
-                    name: 'UP主',
-                    type: 'pie',
-                    radius: '50%',
-                    data: userTitles.map((title, index) => ({
-                        name: title,
-                        value: userViews[index]
-                    })),
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)'
-                        }
-                    }
-                }]
-            };
-
-            myChart.setOption(option);
-        }
-
-        // 渲染用户互动行为折线图
-        function renderInteractionChart(videoData) {
-            const chartDom = document.getElementById('interactionChart');
-            const myChart = echarts.init(chartDom);
-
-            const titles = videoData.map(video => video.title);
-            const likes = videoData.map(video => video.stat.like);
-            const comments = videoData.map(video => video.stat.reply);
-            const danmaku = videoData.map(video => video.stat.danmaku);
-
-            const option = {
-                title: {
-                    text: '用户互动行为折线图',
-                    left: 'center'
-                },
-                tooltip: {
-                    position: function (point) {
-                        return [point[0], point[1] - 50]; // 向上偏移 50px
-                    }
-                },
-                legend: {
-                    data: ['点赞数', '评论数', '弹幕数'],
-                    bottom: '10%'
-                },
-                xAxis: {
-                    type: 'category',
-                    data: titles,
-                    name: '视频标题'
-                },
-                yAxis: {
-                    type: 'value',
-                    name: '互动数量'
-                },
-                series: [
-                    {
-                        name: '点赞数',
-                        type: 'line',
-                        data: likes,
-                        itemStyle: {
-                            color: '#91CC75',
-                        },
-                    },
-                    {
-                        name: '评论数',
-                        type: 'line',
-                        data: comments,
-                        itemStyle: {
-                            color: '#FAC858',
-                        },
-                    },
-                    {
-                        name: '弹幕数',
-                        type: 'line',
-                        data: danmaku,
-                        itemStyle: {
-                            color: '#EE6666',
-                        },
-                    }
-                ]
-            };
-
-            myChart.setOption(option);
-        }
-
-        // 主函数：获取数据并渲染图表
-        async function main(url) {
-            videoData = await fetchVideoData(url);
-            if (videoData) {
-                renderViewsChart(videoData);
-                renderInfluenceChart(videoData);
-                renderInteractionChart(videoData);
-            }
-        }
-
-        // 点击确认按钮
-        document.getElementById('fetchButton').addEventListener('click', () => {
-            const url = document.getElementById('urlInput').value.trim() || defaultUrl;
-            main(url);
-        });
-
-        // 默认加载数据
-        main(defaultUrl);
-    </script>
-</body>
+    <script src="https://utfs.io/f/e9rePmZszdcgPRqO4CcC62eZIKRnvgMF5HEbsQi7hSUXD1BW"></script>
+</body> 
 </html>
+
 ''',
     headers: {'Content-Type': 'text/html'},
   );
