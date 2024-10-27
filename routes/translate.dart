@@ -73,11 +73,15 @@ Future<Response> onRequest(RequestContext context) async {
     print('请求中不包含有效的 targetId 参数');
     try {
       final body = await context.request.body();
-      if (body.isNotEmpty) {
-        htmlDocString = body; // 将请求体中的内容直接赋值给 htmlDocString
-        print('请求体不为空，直接赋值给 $htmlDocString');
+      final jsonData = jsonDecode(body);
+
+      // 检查 jsonData['html'] 是否为 String 类型且不为空
+      if (jsonData['html'] is String &&
+          (jsonData['html'] as String).isNotEmpty) {
+        htmlDocString = jsonData['html'] as String;
+        print('请求体包含 HTML 内容: $htmlDocString');
       } else {
-        throw Exception('请求体为空');
+        throw Exception('HTML 内容为空');
       }
     } catch (e) {
       return Response.json(
