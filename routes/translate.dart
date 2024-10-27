@@ -61,9 +61,25 @@ Future<Response> onRequest(RequestContext context) async {
     }
   }
 
-  // 从指定URL获取HTML字符串
-  String url = 'https://mydiumtify.globeapp.dev/mediumhtml?id=$targetId';
-  String htmlDocString = await fetchHtml(url);
+  String htmlDocString;
+
+  // 检查请求是否包含 targetId 参数
+  if (params.containsKey('id')) {
+    // 从指定URL获取HTML字符串
+    String url = 'https://mydiumtify.globeapp.dev/mediumhtml?id=$targetId';
+    htmlDocString = await fetchHtml(url);
+  } else {
+    // 从客户端请求体中获取HTML
+    try {
+      final body = await context.request.body();
+      htmlDocString = body; // 将请求体中的内容直接赋值给 htmlDocString
+    } catch (e) {
+      return Response.json(
+        body: {'错误': '请求中不包含targetId 参数或者是请求体为空: $e'},
+        statusCode: 400,
+      );
+    }
+  }
 
   // 解析HTML文档
   BeautifulSoup bs = BeautifulSoup(htmlDocString);
