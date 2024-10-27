@@ -63,19 +63,25 @@ Future<Response> onRequest(RequestContext context) async {
 
   String htmlDocString;
 
-  // 检查请求是否包含 targetId 参数
-  if (params.containsKey('id')) {
+// 检查请求是否包含 targetId 参数
+  if (params.containsKey('id') && targetId.isNotEmpty) {
+    print('请求中包含有效的 targetId 参数');
     // 从指定URL获取HTML字符串
     String url = 'https://mydiumtify.globeapp.dev/mediumhtml?id=$targetId';
     htmlDocString = await fetchHtml(url);
   } else {
-    // 从客户端请求体中获取HTML
+    print('请求中不包含有效的 targetId 参数');
     try {
       final body = await context.request.body();
-      htmlDocString = body; // 将请求体中的内容直接赋值给 htmlDocString
+      if (body.isNotEmpty) {
+        htmlDocString = body; // 将请求体中的内容直接赋值给 htmlDocString
+        print('请求体不为空，直接赋值给 $htmlDocString');
+      } else {
+        throw Exception('请求体为空');
+      }
     } catch (e) {
       return Response.json(
-        body: {'错误': '请求中不包含targetId 参数或者是请求体为空: $e'},
+        body: {'错误': '请求中不包含有效的 targetId 参数或者请求体为空: $e'},
         statusCode: 400,
       );
     }
