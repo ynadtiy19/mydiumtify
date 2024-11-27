@@ -13,7 +13,7 @@ Future<Response> onRequest(RequestContext context) async {
       'https://europe-west3-pingenerator-43a15.cloudfunctions.net/api/pinterestAPI/findSuggestedKeywordsAndVolumes');
   final body = jsonEncode({
     'access_token':
-        'pina_AEAZ25IWAA5LMAQAGAAGWDLGJ2K33EQBACGSPQ3ZCNFPLWXB7HEMVWMBAMQL6252W6K5KBREKXKF6SPXPTMPWSFF3XZUE6AA',
+        'pina_AEAZ25IWAA5LMAQAGAAGWDIYQS2G3EYBACGSPNSSNHKY7X6HXMRO7TV74ZQW2V3B4Q6ZLWPKD5WOCY2RMHGSNYGXUPLKRCIA',
     'searchTerm': searchTerm,
     'sortBy': sortBy
   });
