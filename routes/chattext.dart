@@ -10,7 +10,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
-    apiKey: 'AIzaSyCGGBq3APIQsWqHh9Rg9ZUC5zqpW0d5kYc',
+    apiKey: 'AIzaSyBrQnxIMC5oREZUsQzaO9ijzTmZo7WRMbk',
   );
   final chat = model.startChat();
 
