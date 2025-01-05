@@ -67,13 +67,17 @@ Future<Response> onRequest(RequestContext context) async {
   if (params.containsKey('id') && targetId.isNotEmpty) {
     print('请求中包含有效的 targetId 参数');
     // 从指定URL获取HTML字符串
+
     String url = 'https://mydiumtify.globeapp.dev/mediumhtml?id=$targetId';
     htmlDocString = await fetchHtml(url);
+    print(htmlDocString);
   } else {
     print('请求中不包含有效的 targetId 参数');
     try {
       final body = await context.request.body();
+      print(body);
       final jsonData = jsonDecode(body);
+      print(jsonData);
 
       // 检查 jsonData['html'] 是否为 String 类型且不为空
       if (jsonData['html'] is String &&
