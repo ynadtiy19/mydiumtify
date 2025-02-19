@@ -4,8 +4,6 @@ Response onRequest(RequestContext context) {
   return Response(
     headers: {
           'Content-Type': 'text/html',
-          'Content-Length': contentLength.toString(),
-          'Connection': 'close',
         },
     body: ''' <!DOCTYPE html>
 <html lang="zh">
