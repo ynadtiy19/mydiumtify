@@ -15,8 +15,8 @@ Response onRequest(RequestContext context) {
 </head>
 <body class="bg-white text-gray-900">
     <header class="text-center p-10">
-        <h1 class="text-4xl font-bold">我的 App</h1>
-        <p class="mt-2 text-lg text-gray-600">一款专为你打造的便捷应用</p>
+        <h1 class="text-4xl font-bold">云雨之洲 App</h1>
+        <p class="mt-2 text-lg text-gray-600">一款专为你打造的ai聊天绘画应用</p>
     </header>
 
     <section class="max-w-4xl mx-auto p-6">
@@ -30,10 +30,10 @@ Response onRequest(RequestContext context) {
     </section>
 
     <section class="max-w-4xl mx-auto p-6 mt-10">
-        <h2 class="text-2xl font-semibold text-center mb-4">AI 聊天框</h2>
+        <h2 class="text-2xl font-semibold text-center mb-4">AI 绘画框</h2>
         <div id="chat-box" class="border p-4 rounded-lg h-96 overflow-y-auto bg-gray-100"></div>
         <form id="text2image-form" class="mt-4 flex">
-            <input type="text" id="prompt" class="flex-grow p-2 border rounded-l-lg" placeholder="输入你的请求...">
+            <input type="text" id="prompt" class="flex-grow p-2 border rounded-l-lg" placeholder="输入你的promote...">
             <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-r-lg shadow-md hover:bg-blue-600 transition">发送</button>
         </form>
         <p id="loading" class="text-center mt-2 hidden">加载中...</p>
