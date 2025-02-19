@@ -3,8 +3,8 @@ import 'package:dart_frog/dart_frog.dart';
 Response onRequest(RequestContext context) {
   return Response(
     headers: {
-          'Content-Type': 'text/html',
-        },
+      'Content-Type': 'text/html',
+    },
     body: ''' <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -13,7 +13,7 @@ Response onRequest(RequestContext context) {
     <title>我的 App</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900" style="background-image: url('https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJtxAM5IjrYQN95hcSV4DEzHq207GRvmXMa6Uu'); background-size: contain; background-position: center; background-repeat: no-repeat;">
     <header class="text-center p-10">
         <h1 class="text-4xl font-bold">云雨之洲 App</h1>
         <p class="mt-2 text-lg text-gray-600">一款专为你打造的ai聊天绘画应用</p>
