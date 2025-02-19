@@ -27,11 +27,15 @@ Response onRequest(RequestContext context) {
             <div class="p-4 border rounded-lg shadow-md">📌 Pinterest 图像搜索下载</div>
             <div class="p-4 border rounded-lg shadow-md">📰 Medium 文章获取</div>
         </div>
+        <!-- Add the download section here -->
+        <div class="mt-8 text-center">
+            <a href="https://github.com/ynadtiy19/Special-myfirstApp/releases/tag/ynadity19-yunyuzhizhou" class="text-blue-500 hover:underline text-lg">下载最新版本</a>
+        </div>
     </section>
 
     <section class="max-w-4xl mx-auto p-6 mt-10">
         <h2 class="text-2xl font-semibold text-center mb-4">AI 绘画框</h2>
-        <div id="chat-box" class="border p-4 rounded-lg h-96 overflow-y-auto bg-gray-100"></div>
+        <div id="chat-box" class="border p-4 rounded-lg min-h-96 overflow-visible bg-gray-100"></div>
         <form id="text2image-form" class="mt-4 flex">
             <input type="text" id="prompt" class="flex-grow p-2 border rounded-l-lg" placeholder="输入你的promote...">
             <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-r-lg shadow-md hover:bg-blue-600 transition">发送</button>
