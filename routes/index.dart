@@ -20,18 +20,24 @@ Response onRequest(RequestContext context) {
     </header>
 
     <section class="max-w-4xl mx-auto p-6">
-        <h2 class="text-2xl font-semibold text-center mb-4">核心功能</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-4 border rounded-lg shadow-md">💬 AI 多轮聊天</div>
-            <div class="p-4 border rounded-lg shadow-md">🎨 AI 绘画</div>
-            <div class="p-4 border rounded-lg shadow-md">📌 Pinterest 图像搜索下载</div>
-            <div class="p-4 border rounded-lg shadow-md">📰 Medium 文章获取</div>
+    <h2 class="text-2xl font-semibold text-center mb-4">核心功能</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-4 border rounded-lg shadow-md">💬 AI 多轮聊天</div>
+        <div class="p-4 border rounded-lg shadow-md">🎨 AI 绘画</div>
+        <div class="p-4 border rounded-lg shadow-md">📌 Pinterest 图像搜索下载</div>
+        <div class="p-4 border rounded-lg shadow-md">📰 Medium 文章获取</div>
+    </div>
+    <!-- Download Section with buttons -->
+    <div class="mt-8 text-center">
+        <div class="flex justify-center gap-6">
+            <!-- GitHub Download Button -->
+            <a href="https://github.com/ynadtiy19/Special-myfirstApp/releases/tag/ynadity19-yunyuzhizhou" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">GitHub 下载</a>
+            <!-- APK Download Button -->
+            <a href="https://uuunu.standard.us-east-1.oortstorage.com/app-release.apk?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48afcc7569f4101731ec91e116fb5fd0893c&provider=1" class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300">直接下载 APK</a>
         </div>
-        <!-- Add the download section here -->
-        <div class="mt-8 text-center">
-            <a href="https://github.com/ynadtiy19/Special-myfirstApp/releases/tag/ynadity19-yunyuzhizhou" class="text-blue-500 hover:underline text-lg">下载最新版本</a>
-        </div>
-    </section>
+    </div>
+</section>
+
 
     <section class="max-w-4xl mx-auto p-6 mt-10">
         <h2 class="text-2xl font-semibold text-center mb-4">AI 绘画框</h2>
