@@ -13,7 +13,7 @@ Response onRequest(RequestContext context) {
     <title>我的 App</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white text-gray-900" style="background-image: url('https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJtxAM5IjrYQN95hcSV4DEzHq207GRvmXMa6Uu'); background-size: contain; background-position: center; background-repeat: no-repeat;">
+<body class="bg-white text-gray-900" style="background-image: url('https://uuunu.standard.us-east-1.oortstorage.com/Aesthetic%20phone%20background%20_%20phone%20wallpaper%20nude%20colours.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af676688e4fba38ed344218562dba14b07&provider=1'); background-size: contain; background-position: center; background-repeat: no-repeat;">
     <header class="text-center p-10">
         <h1 class="text-4xl font-bold">云雨之洲 App</h1>
         <p class="mt-2 text-lg text-gray-600">一款专为你打造的ai聊天绘画应用</p>
@@ -46,12 +46,12 @@ Response onRequest(RequestContext context) {
     <section class="max-w-4xl mx-auto p-6 mt-10">
         <h2 class="text-2xl font-semibold text-center mb-4">应用截图</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJFgI5sgEjbqodhJaLPQsc9Ciy5k0vneOMtRXS" class="rounded-lg shadow-md">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJ1W8y58khTEM1BbKm2o3fLOIpVz9snycAdwix" class="rounded-lg shadow-md">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJHjHsz9d61VLOCXfbkE95M3g7co4lsUBYRmiG" class="rounded-lg shadow-md">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJ5EuMM8nQSK1WaoUzlcNyFtVngb6k7uXC2DBx" class="rounded-lg shadow-md">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJ4JF4qWYTgwzd18DcvrX7MIp0ueoq6CZJ5PEU" class="rounded-lg shadow-md">
-            <img src="https://vcerx5uxq2.ufs.sh/f/LvzfcPJgBkEJfPWwRLKMLA8XbsujUJetmHxn2OgzW5rRQI4Y" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-14-51-725_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-14-18-083_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-13-44-407_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-14-51-725_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-14-21-482_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
+            <img src="https://uuunu.standard.us-east-1.oortstorage.com/Screenshot_2025-02-19-12-13-34-441_com.example.hung.jpg?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48af728a40e5ca6d6cf013ffd21a83dd67ea&provider=1" class="rounded-lg shadow-md">
         </div>
     </section>
 
