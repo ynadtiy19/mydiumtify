@@ -55,7 +55,7 @@ Response onRequest(RequestContext context) {
             const chatBox = document.getElementById('chat-box');
             const loading = document.getElementById('loading');
 
-            chatBox.innerHTML += `<p class='p-2 bg-gray-200 rounded-lg mt-2'>用户: ${prompt}</p>`;
+            chatBox.innerHTML += `<p class='p-2 bg-gray-200 rounded-lg mt-2'>用户: \${prompt}</p>`;
             loading.style.display = 'block';
 
             const apiUrl = 'https://api-key.fusionbrain.ai/';
@@ -127,7 +127,7 @@ Response onRequest(RequestContext context) {
                 loading.style.display = 'none';
                 if (images) {
                     images.forEach(imageBase64 => {
-                        chatBox.innerHTML += `<img src='data:image/png;base64,${imageBase64}' class='rounded-lg shadow-md mt-2' alt="${prompt}">`;
+                        chatBox.innerHTML += `<img src='data:image/png;base64,\${imageBase64}' class='rounded-lg shadow-md mt-2' alt="\${prompt}">`;
                     });
                 } else {
                     chatBox.innerHTML += `<p class='p-2 bg-red-200 rounded-lg mt-2'>生成失败，请重试</p>`;
@@ -142,82 +142,5 @@ Response onRequest(RequestContext context) {
 </body>
 </html>
 ''',
-//     body: '''<!DOCTYPE html>
-// <html lang="zh-CN">
-// <head>  
-//     <meta charset="UTF-8">    
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-//     <title>视频数据分析</title>    
-//     <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>  
-//     <style>
-//         body {
-//             font-family: Arial, sans-serif;
-//             display: flex;
-//             flex-direction: column;
-//             align-items: center;
-//             margin: 0;
-//             padding: 20px;
-//         }
-//         #urlInput {
-//             width: 300px;
-//             padding: 10px;
-//             margin-bottom: 20px;
-//             border: 1px solid #ccc;
-//             border-radius: 5px;
-//         }
-//         #fetchButton {
-//             padding: 10px 15px;
-//             background-color: #4CAF50;
-//             color: white;
-//             border: none;
-//             border-radius: 5px;
-//             cursor: pointer;
-//         }
-//         #fetchButton:hover {
-//             background-color: #45a049;
-//         }
-//         #message {
-//             margin-bottom: 20px;
-//             font-size: 16px;
-//         }
-//         .chart {
-//             width: 100%;
-//             height: 400px;
-//             margin-bottom: 40px;
-//         }
-//         #dropArea {
-//             width: 300px;
-//             height: 100px;
-//             border: 2px dashed #ccc;
-//             border-radius: 5px;
-//             display: flex;
-//             align-items: center;
-//             justify-content: center;
-//             margin-bottom: 20px;
-//             color: #aaa;
-//             cursor: pointer;
-//         }
-//         #dropArea.hover {
-//             border-color: #4CAF50;
-//             color: #4CAF50;
-//         }
-//     </style>
-// </head>
-// <body>
-//     <h1>视频数据分析</h1>
-//     <div id="message">请输入视频数据的 URL 或拖放 JSON 文件:</div>
-//     <input type="text" id="urlInput" placeholder="请输入 URL">
-//     <button id="fetchButton">确认</button>
-//     <div id="dropArea">拖放 JSON 文件到这里</div>
-//     <div id="viewsChart" class="chart"></div>
-//     <div id="viewsBarChart" class="chart"></div>
-//     <div id="influenceChart" class="chart"></div>
-//     <div id="interactionChart" class="chart"></div>
-//     <script src="https://utfs.io/f/e9rePmZszdcgPRqO4CcC62eZIKRnvgMF5HEbsQi7hSUXD1BW"></script>
-// </body> 
-// </html>
-
-// ''',
-    headers: {'Content-Type': 'text/html'},
   );
 }
