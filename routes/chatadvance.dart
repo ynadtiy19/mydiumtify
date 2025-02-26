@@ -10,7 +10,7 @@ Future<Response> onRequest(RequestContext context) async {
   //https://mydiumtify.globeapp.dev/chatadvance?q=${Uri.encodeComponent(text)}
   final model = GenerativeModel(
     model: 'gemini-1.5-flash-latest',
-    apiKey: 'AIzaSyD8pA32k91ftgHbqvBto6jj7HIo_LPeRVk',
+    apiKey: 'AIzaSyDDD_IslWsdyUfYFL239gTNOImEIdY7pI8',
   );
 
   if (context.request.method == HttpMethod.post) {
