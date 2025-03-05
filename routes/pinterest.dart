@@ -34,7 +34,22 @@ class PinterestScraper {
   Future<void> startScraping() async {
     String startUrl =
         'https://www.pinterest.com/resource/BaseSearchResource/get/?source_url=%2Fsearch%2Fpins%2F%3Fq%3D$query&data=%7B%22options%22%3A%7B%22query%22%3A%22$query%22%7D%7D'; 
-    var response = await http.get(Uri.parse(startUrl));
+
+    var headerts = {
+        'cookie': cookie,
+        'x-csrftoken': xCrsftoken,
+        'Content-Type': 'application/json',
+      };
+
+    Map<String, dynamic> payloadt = {
+        "source_url":
+            '/search/pins/?q=$query&rs=typed&term_meta[]=$query%7Ctyped',
+        "data": {"options":{"source":"browser","stats":[["web_story_card_type",1,"c",1,{"story_type":"shop_tab_upsell","surface":"search"}],["web_story_card_type",1,"c",1,{"story_type":"search_story_separator","surface":"search"}],["web_story_card_type",1,"c",1,{"story_type":"shop_tab_upsell","surface":"search"}],["web_story_card_type",1,"c",1,{"story_type":"search_story_separator","surface":"search"}],["web_story_card_type",1,"c",1,{"story_type":"shop_tab_upsell","surface":"search"}],["web_story_card_type",1,"c",1,{"story_type":"search_story_separator","surface":"search"}]],"keepAlive":"fallback"},"context":{}}
+      };
+
+    
+    
+    var response = await http.get(Uri.parse(startUrl),headers: headerts,body: jsonEncode(payloadt));
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
 
