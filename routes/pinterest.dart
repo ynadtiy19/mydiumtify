@@ -49,7 +49,7 @@ class PinterestScraper {
 
     
     
-    var response = await http.get(Uri.parse(startUrl),headers: headerts,body: jsonEncode(payloadt));
+    var response = await http.post(Uri.parse(startUrl),headers:headerts,body:jsonEncode(payloadt));
     if (response.statusCode == 200) {
       var jsonResponse = jsonDecode(response.body);
 
