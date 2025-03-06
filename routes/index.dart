@@ -33,7 +33,7 @@ Response onRequest(RequestContext context) {
             <!-- GitHub Download Button -->
             <a href="https://github.com/ynadtiy19/Special-myfirstApp/releases/tag/ynadity19-yunyuzhizhou" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">GitHub 下载</a>
             <!-- APK Download Button -->
-            <a href="https://uuunu.standard.us-east-1.oortstorage.com/app-release.apk?signature=be0fa9891a9c0c40b2d774b18702dcbc9eced61758d7091c02a36c642a45d3142c6b7a9a24aacf967644c8a8f9e47aecd7e20d7e91879c134c389bcac4ad23aa9c9629ce5bc70e363b85aa74664c48afcc7569f4101731ec91e116fb5fd0893c&provider=1" class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300">直接下载 APK</a>
+            <a href="https://sfd.standard.us-east-1.oortstorage.com/app-release.apk" class="bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300">直接下载 APK</a>
         </div>
     </div>
 </section>
