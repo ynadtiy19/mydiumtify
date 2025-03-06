@@ -35,7 +35,6 @@ Future<Map<String, Map<String, dynamic>>> profileImageFetch(
       'accept-encoding': 'gzip, deflate, br, zstd',
       'accept-language': 'zh-CN,zh;q=0.9',
       'cache-control': 'no-cache',
-      'content-length': '735',
       'content-type': 'application/json',
       'origin': 'https://clickapp.com',
       'pragma': 'no-cache',
