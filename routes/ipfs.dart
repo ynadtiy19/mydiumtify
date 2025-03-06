@@ -31,15 +31,10 @@ Future<Map<String, Map<String, dynamic>>> profileImageFetch(
           (X509Certificate cert, String host, int port) => true); // 忽略证书错误
     final url = Uri.parse('https://indexer.clickapp.com/');
     final headers = {
-      ':authority': 'indexer.clickapp.com',
-      ':method': 'POST',
-      ':path': '/',
-      ':scheme': 'https',
       'accept': '*/*',
       'accept-encoding': 'gzip, deflate, br, zstd',
       'accept-language': 'zh-CN,zh;q=0.9',
       'cache-control': 'no-cache',
-      'content-length': '735',
       'content-type': 'application/json',
       'origin': 'https://clickapp.com',
       'pragma': 'no-cache',
@@ -63,11 +58,11 @@ Future<Map<String, Map<String, dynamic>>> profileImageFetch(
         'contentType': '',
         'limit': index,
       },
-      'query': '''
-      query nftsByOwner(\$account: String!, \$limit: Int, \$contentType: String) {
+      'query': r'''
+      query nftsByOwner($account: String!, $limit: Int, $contentType: String) {
         eRC721Tokens(
-          filter: {ownerId: {equalToInsensitive: \$account}, contentType: {includes: \$contentType}}
-          first: \$limit
+          filter: {ownerId: {equalToInsensitive: $account}, contentType: {includes: $contentType}}
+          first: $limit
           orderBy: TIMESTAMP_DESC
         ) {
           nodes {
