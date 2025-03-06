@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 Future<String?> fetchPinterestData() async {
   var url =
       Uri.parse('https://www.pinterest.com/resource/BaseSearchResource/get/');
-
   // 请求头信息
   var headers = {
     'accept': 'application/json, text/javascript, */*, q=0.01',
