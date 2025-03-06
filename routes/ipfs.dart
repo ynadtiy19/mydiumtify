@@ -54,7 +54,7 @@ Future<Map<String, Map<String, dynamic>>> profileImageFetch(
     final payload = {
       'operationName': 'nftsByOwner',
       'variables': {
-        'account': '0x1d7baa90d63b79c4cbeaf3b40a7be53791158b1f',
+        'account': '0x5C4cF941cA63bA5e20493A78B54c4DACE099426b',
         'contentType': '',
         'limit': index,
       },
