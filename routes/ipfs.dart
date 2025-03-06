@@ -31,10 +31,6 @@ Future<Map<String, Map<String, dynamic>>> profileImageFetch(
           (X509Certificate cert, String host, int port) => true); // 忽略证书错误
     final url = Uri.parse('https://indexer.clickapp.com/');
     final headers = {
-      ':authority': 'indexer.clickapp.com',
-      ':method': 'POST',
-      ':path': '/',
-      ':scheme': 'https',
       'accept': '*/*',
       'accept-encoding': 'gzip, deflate, br, zstd',
       'accept-language': 'zh-CN,zh;q=0.9',
