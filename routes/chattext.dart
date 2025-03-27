@@ -9,7 +9,7 @@ Future<Response> onRequest(RequestContext context) async {
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
 
   final model = GenerativeModel(
-    model: 'gemini-2.5-pro-exp-03-25',
+    model: 'gemini-2.0-flash',
     apiKey: 'AIzaSyCLYQaPDW-gTUrBU1nW2kXMHKuNaKMikD8',
     generationConfig: GenerationConfig(
       temperature: 2,
