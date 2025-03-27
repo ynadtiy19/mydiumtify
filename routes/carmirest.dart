@@ -16,14 +16,12 @@ Future<bool> fetchTranslation() async {
   };
   final Uri requestUrl =
       Uri.parse('$apiUrl?${Uri(queryParameters: queryParams).query}');
-  final Uri sesameurl = Uri.parse('https://sesame-test-master.onrender.com/');
 
   // 请求函数
   Future<http.Response?> sendRequest() async {
     try {
       final response =
           await http.get(requestUrl).timeout(const Duration(seconds: 30));
-      await http.get(sesameurl).timeout(const Duration(seconds: 30));
       print('测试成功生效');
       return response;
     } on TimeoutException catch (_) {
