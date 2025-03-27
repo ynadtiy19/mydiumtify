@@ -10,7 +10,7 @@ Future<Response> onRequest(RequestContext context) async {
   //https://mydiumtify.globeapp.dev/chatadvance?q=${Uri.encodeComponent(text)}
   final model = GenerativeModel(
     model: 'gemini-2.0-flash-exp-image-generation',
-    apiKey: 'AIzaSyBGdVNWSMjvc60wV-cw5Yo3FnbkfjJDzHY',
+    apiKey: 'AIzaSyDQKZuhtzW6l4ZcZcCirfHmwth1oqjEe-Q',
     generationConfig: GenerationConfig(
       temperature: 1.8,
       topK: 40,
