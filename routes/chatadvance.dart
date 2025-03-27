@@ -9,8 +9,15 @@ import 'package:mime/mime.dart';
 Future<Response> onRequest(RequestContext context) async {
   //https://mydiumtify.globeapp.dev/chatadvance?q=${Uri.encodeComponent(text)}
   final model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: 'AIzaSyDDD_IslWsdyUfYFL239gTNOImEIdY7pI8',
+    model: 'gemini-2.0-flash-exp-image-generation',
+    apiKey: 'AIzaSyBGdVNWSMjvc60wV-cw5Yo3FnbkfjJDzHY',
+    generationConfig: GenerationConfig(
+      temperature: 1.8,
+      topK: 40,
+      topP: 0.95,
+      maxOutputTokens: 8192,
+      responseMimeType: 'text/plain',
+    ),
   );
 
   if (context.request.method == HttpMethod.post) {
