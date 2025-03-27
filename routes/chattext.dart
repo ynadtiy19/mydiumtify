@@ -9,8 +9,15 @@ Future<Response> onRequest(RequestContext context) async {
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
 
   final model = GenerativeModel(
-    model: 'gemini-1.5-flash-latest',
-    apiKey: 'AIzaSyBrQnxIMC5oREZUsQzaO9ijzTmZo7WRMbk',
+    model: 'gemini-2.5-pro-exp-03-25',
+    apiKey: 'AIzaSyBi6DzqEKDLkQSwYXrh2QkmyNwx1jETU_4',
+    generationConfig: GenerationConfig(
+      temperature: 2,
+      topK: 64,
+      topP: 0.95,
+      maxOutputTokens: 65536,
+      responseMimeType: 'text/plain',
+    ),
   );
   final chat = model.startChat();
 
