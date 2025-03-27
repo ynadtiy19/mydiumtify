@@ -10,7 +10,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   final model = GenerativeModel(
     model: 'gemini-2.5-pro-exp-03-25',
-    apiKey: 'AIzaSyBi6DzqEKDLkQSwYXrh2QkmyNwx1jETU_4',
+    apiKey: 'AIzaSyCLYQaPDW-gTUrBU1nW2kXMHKuNaKMikD8',
     generationConfig: GenerationConfig(
       temperature: 2,
       topK: 64,
