@@ -4,7 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http; // 导入 dart_frog
 
 Future<Response> onRequest(RequestContext context) async {
-  if (context.request.method != HttpMethod.post) {
+  if (context.request.method == HttpMethod.post) {
     final headers = {'Content-Type': 'application/json'};
     final request = http.Request(
         'POST',
