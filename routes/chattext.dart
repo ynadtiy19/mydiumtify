@@ -55,5 +55,6 @@ Future<Response> onRequest(RequestContext context) async {
 
   return Response.json(
     body: {"isSender": false, "text": responseBody},
+    headers: headers, // 确保在这里也包含头部
   );
 }
