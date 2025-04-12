@@ -4,6 +4,7 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http; // 导入 dart_frog
 
 Future<Response> onRequest(RequestContext context) async {
+  //请求路径 https://mydiumtify.globeapp.dev/sesamethirty
   if (context.request.method == HttpMethod.post) {
     final headers = {'Content-Type': 'application/json'};
     final request = http.Request(
