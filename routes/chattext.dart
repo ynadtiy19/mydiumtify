@@ -4,6 +4,20 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 Future<Response> onRequest(RequestContext context) async {
   // 设置 CORS 头
 
+   final headers = {
+    'Access-Control-Allow-Origin': '*',  // Allow requests from any origin
+    //  'Access-Control-Allow-Origin': 'https://your-frontend-domain.com', //  For production:  Restrict to your frontend's domain.
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', //  Specify allowed methods
+    'Access-Control-Allow-Headers':
+        'Origin, Content-Type, Accept', //  Specify allowed headers
+  };
+
+  // Handle OPTIONS requests (preflight)
+  if (context.request.method == HttpMethod.options) {
+    return Response(statusCode: 204, headers: headers); //  204 No Content for OPTIONS
+  }
+
+
   // 获取查询参数
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
