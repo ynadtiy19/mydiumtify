@@ -155,16 +155,16 @@ Future<Response> onRequest(RequestContext context) async {
               {
                 'type': 'text',
                 'text':
-                    'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.'
+                    'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
               }
-            ]
+            ],
           }
         ],
-        'customModelId': ''
+        'customModelId': '',
       });
     request.headers.addAll(headers);
 
-    final response = await request.send();
+    final response = await request.send().timeout(const Duration(seconds: 30));
     if (response.statusCode == 200) {
       // 1. 从响应流中读取所有字节
       final responseBytes = await response.stream.toBytes();
