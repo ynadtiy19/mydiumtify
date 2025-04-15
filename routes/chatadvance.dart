@@ -95,7 +95,10 @@ Future<Response> onRequest(RequestContext context) async {
   final params = context.request.uri.queryParameters;
   if (params.containsKey('imgurl')) {
     final imgUrl = params['imgurl'];
-
+    String? urlquery = '';
+    if (params.containsKey('q')) {
+      urlquery = params['q'];
+    }
     final url = Uri.parse('https://chat.writingmate.ai/api/chat/public');
     final headers = {
       'CONTENT_TYPE': ' application/json',
@@ -155,6 +158,10 @@ Future<Response> onRequest(RequestContext context) async {
               'type': 'text',
               'text':
                   'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
+            },
+            {
+              'type': 'text',
+              'text': urlquery,
             }
           ],
         }
