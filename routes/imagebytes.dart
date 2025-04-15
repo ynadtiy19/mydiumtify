@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
-import 'package:zstandard/zstandard.dart';
 
 Future<Response> onRequest(RequestContext context) async {
   //https://mydiumtify.globeapp.dev/imagebytes?medium_id=7b759aebbfe1
@@ -48,22 +44,13 @@ Future<Response> onRequest(RequestContext context) async {
 
   if (response.statusCode == 200) {
     final compressedBytes = response.bodyBytes;
-
-    final zstd = Zstandard();
-    Uint8List? decompressedBytes;
-    try {
-      decompressedBytes = await zstd.decompress(compressedBytes);
-    } catch (e) {
-      return Response.json(
-        statusCode: 500,
-        body: {'error': 'Zstd 解压失败', 'detail': e.toString()},
-      );
-    }
-
-    final decodedString = utf8.decode(decompressedBytes! as List<int>);
-    return Response(
-      headers: {'content-type': 'text/html; charset=utf-8'},
-      body: decodedString,
+    return Response.bytes(
+      body: compressedBytes,
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'content-encoding': 'zstd',
+        'cache-control': 'no-store',
+      },
     );
   } else {
     return Response.json(
