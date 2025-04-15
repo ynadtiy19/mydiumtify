@@ -96,6 +96,7 @@ Future<Response> onRequest(RequestContext context) async {
   if (params.containsKey('imgurl')) {
     final imgUrl = params['imgurl'];
 
+    final url = Uri.parse('https://chat.writingmate.ai/api/chat/public');
     var headers = {
       'CONTENT_TYPE': ' application/json',
       'USER_AGENT':
@@ -118,74 +119,78 @@ Future<Response> onRequest(RequestContext context) async {
       'SEC_CH_UA_PLATFORM': ' "Windows"',
       'Content-Type': 'application/json'
     };
-    var request = http.Request(
-        'POST', Uri.parse('https://chat.writingmate.ai/api/chat/public'))
-      ..body = jsonEncode({
-        'response_format': {
-          'type': 'json_schema',
-          'json_schema': {
-            'name': 'image_caption',
-            'strict': true,
-            'schema': {
-              'type': 'object',
-              'properties': {
-                'caption': {'type': 'string'}
-              },
-              'required': ['caption'],
-              'additionalProperties': false
+    final body = jsonEncode({
+      'response_format': {
+        'type': 'json_schema',
+        'json_schema': {
+          'name': 'image_caption',
+          'strict': true,
+          'schema': {
+            'type': 'object',
+            'properties': {
+              'caption': {'type': 'string'}
+            },
+            'required': ['caption'],
+            'additionalProperties': false
+          }
+        }
+      },
+      'chatSettings': {
+        'model': 'gpt-4o-vision',
+        'temperature': 0.7,
+        'contextLength': 16385,
+        'includeProfileContext': false,
+        'includeWorkspaceInstructions': false,
+        'embeddingsProvider': 'openai'
+      },
+      'messages': [
+        {
+          'role': 'user',
+          'content': [
+            {
+              'type': 'image_url',
+              'image_url': {'url': imgUrl}
+            },
+            {
+              'type': 'text',
+              'text':
+                  'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
             }
-          }
-        },
-        'chatSettings': {
-          'model': 'gpt-4o-vision',
-          'temperature': 0.7,
-          'contextLength': 16385,
-          'includeProfileContext': false,
-          'includeWorkspaceInstructions': false,
-          'embeddingsProvider': 'openai'
-        },
-        'messages': [
-          {
-            'role': 'user',
-            'content': [
-              {
-                'type': 'image_url',
-                'image_url': {'url': imgUrl}
-              },
-              {
-                'type': 'text',
-                'text':
-                    'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
-              }
-            ],
-          }
-        ],
-        'customModelId': '',
-      });
-    request.headers.addAll(headers);
+          ],
+        }
+      ],
+      'customModelId': '',
+    });
 
-    final response = await request.send().timeout(const Duration(seconds: 30));
-    if (response.statusCode == 200) {
-      // 1. 从响应流中读取所有字节
-      final responseBytes = await response.stream.toBytes();
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: body, // 将Dart对象转换为JSON字符串
+      );
+      if (response.statusCode == 200) {
+        final compressedBytes = response.bodyBytes;
 
-      // 2. 使用 Brotli 解压缩字节数组
-      final decodedBytes = brotli.decode(responseBytes);
+        final decodedBytes = brotli.decode(compressedBytes);
+        final decodedString = utf8.decode(decodedBytes);
 
-      // 3. 将解压缩后的字节数组解码为 UTF-8 字符串
-      final decodedString = utf8.decode(decodedBytes);
+        final dynamic responseJson = jsonDecode(decodedString);
 
-      // 4. 解析 JSON 字符串
-      final dynamic responseJson = jsonDecode(decodedString);
+        // 5. 提取 caption
+        final caption = responseJson['caption'];
 
-      // 5. 提取 caption
-      final caption = responseJson['caption'];
-
-      return Response.json(body: {'generated_text': caption});
-    } else {
+        return Response.json(body: {'generated_text': caption});
+      } else {
+        return Response.json(
+            statusCode: response.statusCode,
+            body: {'error': 'Failed to fetch caption'});
+      }
+    } catch (e) {
+      print('Error: $e');
       return Response.json(
-          statusCode: response.statusCode,
-          body: {'error': 'Failed to fetch caption'});
+        statusCode: HttpStatus.internalServerError,
+        body: {'error': 'Failed to process the request.'},
+      );
     }
   } else {
     return Response.json(
