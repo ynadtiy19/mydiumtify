@@ -157,7 +157,7 @@ Future<Response> onRequest(RequestContext context) async {
             {
               'type': 'text',
               'text':
-                  'Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
+                  'Provide a detailed description of this image and at the end of the description to Generate a caption for this image with a romantic and heartfelt sentiment. Include relevant hashtags at the end of the caption.. Include relevant emojis in the caption.. Keep it concise, within 480 characters.',
             },
             {
               'type': 'text',
