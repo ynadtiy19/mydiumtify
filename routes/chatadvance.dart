@@ -97,7 +97,7 @@ Future<Response> onRequest(RequestContext context) async {
     final imgUrl = params['imgurl'];
 
     final url = Uri.parse('https://chat.writingmate.ai/api/chat/public');
-    var headers = {
+    final headers = {
       'CONTENT_TYPE': ' application/json',
       'USER_AGENT':
           ' Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0',
@@ -166,30 +166,44 @@ Future<Response> onRequest(RequestContext context) async {
       final response = await http.post(
         url,
         headers: headers,
-        body: body, // 将Dart对象转换为JSON字符串
+        body: body, // JSON字符串
       );
+
       if (response.statusCode == 200) {
+        final encoding = response.headers['content-encoding'];
+
+        Uint8List? decodedBytes;
         final compressedBytes = response.bodyBytes;
 
-        final decodedBytes = brotli.decode(compressedBytes);
-        final decodedString = utf8.decode(decodedBytes);
+        if (encoding == 'br') {
+          decodedBytes = brotli.decode(compressedBytes) as Uint8List?;
+          print('br decoded');
+        } else {
+          // 无编码或未知编码，直接使用原始数据
+          decodedBytes = response.bodyBytes;
+          print('no encoding or unknown encoding');
+        }
 
-        final dynamic responseJson = jsonDecode(decodedString);
+        final jsonString = utf8.decode(decodedBytes! as List<int>);
+        final dynamic responseJson = jsonDecode(jsonString);
 
-        // 5. 提取 caption
         final caption = responseJson['caption'];
 
         return Response.json(body: {'generated_text': caption});
       } else {
         return Response.json(
-            statusCode: response.statusCode,
-            body: {'error': 'Failed to fetch caption'});
+          statusCode: response.statusCode,
+          body: {'error': 'Failed to fetch caption'},
+        );
       }
     } catch (e) {
       print('Error: $e');
       return Response.json(
         statusCode: HttpStatus.internalServerError,
-        body: {'error': 'Failed to process the request.'},
+        body: {
+          'error': 'Failed to process the request.',
+          'detail': e.toString()
+        },
       );
     }
   } else {
