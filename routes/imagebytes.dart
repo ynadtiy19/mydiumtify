@@ -17,7 +17,6 @@ Future<Response> onRequest(RequestContext context) async {
     'authorization':
         'Bearer ya29.a0AZYkNZjIKZYDBE7P4V42X16j9ab9zJ5AD7dpTVpB6CKoV0-HiDfa2jE6hSv0j7LnmUDAIznSNdMF4hL9y3G7yfu_q5inEPVMTHOHtV8292ymF6Vqq-bZRWdZcZA8pw55kKkpfLnOa8u2Ur_cRZ5n5qW5fwj51U_sTNwVL4voTLNJ_4863SSXese_LyZNICko_Qn3W0EQ6pdbkVDQ1aUwdXnkKsLQ4ASByzlMTtdlMq9-Oy3x9wtdRRx-LIRNf8nMlFiWwsQn3g3JV3vbyYamdix-NZDphTNDHjUkkNk1-PFNADk06SOlGgJFiV2R-aj8nwvCmDkdKgg1QFYlygr-mpn-wxtf9K-Z_gKgQNpZnFaliu3xSLwSwS8R_2ulT013j6AyTTQDznvhPpn3zpvwMpjhx74RO_UYUX8LOFRoaCgYKAQQSARISFQHGX2Mi33Vg6egBm6iXOLaoeRus9Q0431',
     'cache-control': 'no-cache',
-    'content-length': '729',
     'content-type': 'text/plain;charset=UTF-8',
     'origin': 'https://labs.google',
     'pragma': 'no-cache',
