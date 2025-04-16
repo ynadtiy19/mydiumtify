@@ -9,6 +9,8 @@ Future<Response> onRequest(RequestContext context) async {
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? '一条小河';
   final rebackimg = params['rebackimg']?.toLowerCase() == 'true';
+  final aspect =
+      params['aspect']?.toUpperCase() ?? 'LANDSCAPE'; // 默认值为 'LANDSCAPE'
 
   final headers = {
     'accept': '*/*',
@@ -44,7 +46,8 @@ Future<Response> onRequest(RequestContext context) async {
       'tool': 'BACKBONE',
     },
     'modelInput': {'modelNameType': 'IMAGEN_3_1'},
-    'aspectRatio': 'IMAGE_ASPECT_RATIO_LANDSCAPE'
+    'aspectRatio':
+        'IMAGE_ASPECT_RATIO_$aspect', // 拼接 aspect 到 IMAGE_ASPECT_RATIO
   });
 
   final response = await http.post(
