@@ -40,7 +40,10 @@ Future<Response> onRequest(RequestContext context) async {
       'prompts': [query],
       'mediaCategory': 'MEDIA_CATEGORY_BOARD'
     },
-    'clientContext': {'sessionId': ';1744790990107', 'tool': 'BACKBONE'},
+    'clientContext': {
+      'sessionId': ';${DateTime.now().millisecondsSinceEpoch}',
+      'tool': 'BACKBONE',
+    },
     'modelInput': {'modelNameType': 'IMAGEN_3_1'},
     'aspectRatio': 'IMAGE_ASPECT_RATIO_LANDSCAPE'
   });
