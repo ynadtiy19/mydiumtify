@@ -8,7 +8,7 @@ Future<Response> onRequest(RequestContext context) async {
 
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? '一条小河';
-  final rebackimg = params['rebackimg']?.toLowerCase() == 'false';
+  final rebackimg = params['rebackimg']?.toLowerCase() == 'true';
 
   final headers = {
     'authorization':
@@ -33,7 +33,16 @@ Future<Response> onRequest(RequestContext context) async {
   );
 
   if (response.statusCode == 200) {
-    final compressedBytes = response.bodyBytes;
+    final json = jsonDecode(response.body);
+
+    final encodedStr =
+        json['imagePanels']?[0]?['generatedImages']?[0]?['encodedImage'];
+    if (encodedStr == null) {
+      return Response(body: 'No image found in response');
+    }
+
+    // 解码 base64 为字节数据
+    final compressedBytes = base64Decode(encodedStr as String);
     if (rebackimg) {
       return Response.bytes(
         body: compressedBytes,
@@ -42,8 +51,7 @@ Future<Response> onRequest(RequestContext context) async {
         },
       );
     } else {
-      final base64Str = base64Encode(compressedBytes);
-      return Response(body: base64Str, headers: {
+      return Response(body: encodedStr, headers: {
         'Content-Type': 'text/plain; charset=utf-8',
       });
     }
