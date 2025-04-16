@@ -4,7 +4,9 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
-  //https://mydiumtify.globeapp.dev/imagebytes?q=%E4%B8%80%E6%9D%A1%E5%B0%8F%E6%BA%AA&rebackimg=true
+  //https://mydiumtify.globeapp.dev/imagebytes?q=%E4%B8%80%E6%9D%A1%E5%B0%8F%E6%BA%AA&rebackimg=true&aspect=PORTRAIT
+
+  //aspect=PORTRAIT,SQUARE,LANDSCAPE
 
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? '一条小河';
