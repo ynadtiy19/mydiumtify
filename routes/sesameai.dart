@@ -359,33 +359,33 @@ Future<Response> onRequest(RequestContext context) async {
   //请求路径 https://mydiumtify.globeapp.dev/sesameai
   if (context.request.method == HttpMethod.post) {
     try {
-      // // 创建 SesameAI 客户端实例
-      // final apiClient = SesameAI();
-      // // 创建匿名帐户并获取 SignupResponse
-      // final signupResponse = await apiClient.createAnonymousAccount();
-      // // 从 SignupResponse 中提取 ID 令牌
-      // final idToken = signupResponse.idToken;
+      // 创建 SesameAI 客户端实例
+      final apiClient = SesameAI();
+      // 创建匿名帐户并获取 SignupResponse
+      final signupResponse = await apiClient.createAnonymousAccount();
+      // 从 SignupResponse 中提取 ID 令牌
+      final idToken = signupResponse.idToken;
 
-      final request = http.MultipartRequest(
-        'POST',
-        Uri.parse(
-            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDtC7Uwb5pGAsdmrH2T4Gqdk5Mga07jYPM'),
-      );
-
-      request.fields.addAll({
-        'returnSecureToken': 'true',
-      });
-
-      final response = await request.send();
-      dynamic idToken = 'this is test id token';
-
-      if (response.statusCode == 200) {
-        final responseBody = await response.stream.bytesToString(); // 转成字符串
-        final data = jsonDecode(responseBody); // 转成Map
-        idToken = data['idToken']; // 提取idToken
-      } else {
-        idToken = await response.stream.bytesToString();
-      }
+      // final request = http.MultipartRequest(
+      //   'POST',
+      //   Uri.parse(
+      //       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDtC7Uwb5pGAsdmrH2T4Gqdk5Mga07jYPM'),
+      // );
+      //
+      // request.fields.addAll({
+      //   'returnSecureToken': 'true',
+      // });
+      //
+      // final response = await request.send();
+      // dynamic idToken = 'this is test id token';
+      //
+      // if (response.statusCode == 200) {
+      //   final responseBody = await response.stream.bytesToString(); // 转成字符串
+      //   final data = jsonDecode(responseBody); // 转成Map
+      //   idToken = data['idToken']; // 提取idToken
+      // } else {
+      //   idToken = await response.stream.bytesToString();
+      // }
       return Response.json(
         body: {'id_token': idToken},
       );
