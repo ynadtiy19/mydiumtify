@@ -19,7 +19,7 @@ Future<Response> onRequest(RequestContext context) async {
     'accept-encoding': 'gzip, deflate, br, zstd',
     'accept-language': 'en-US,en;q=0.9',
     'authorization':
-        'Bearer ya29.a0AZYkNZgB7CSw6EVlySQXHZwB7WbhrhYOTgw4tWqaXYA8CZMvSCpi24iEf3kXiKJU3g2qXfQG5deCt1nTeT_WxjJL5DdZtVVrlgAfTYORMlrJbNueV0Cpx8AMVXPpQfcrU3Qbig4ZGkQQcdTavS2zkAufJ3xgbWutD3fYuFaJp_UaoILIREIE-lZKHLfI9PYvelTN21rySbDA8F_diBXJ0jTTCLZ5HSnV4PJCaJOULL4B6VsktyLQTTOX9o7pmXjYibzIc_Xgf66d6JIVXt5zwQCjH_z6b_t9G9xjupMacRvT_caRsxkXp-wgVMSOQxZ2Ry0PXnQoMIgQoddfQMby_V2vGqgLpHYg6QY512XDDcllod9WNkFvBO54-GIKsnT9yX8QiuBNVkzPRkDgcnHVAFw_mV_M7k9jnCexl_nkaCgYKAaUSARISFQHGX2MiKl245wNEnmFK7I3zTin9mw0431',
+        'Bearer ya29.a0AZYkNZj-TdWvW1xmzxasL5TW3tcsQf5j-JP9NNkQe1P5hkhN7J2s1KUCVNOLY9V91fpFQwxoGLA4i-jSXkhiHYl9uNBlBo6FcqBkvhsVdLAphGvRe1WITd4vCp_6tggsdSDjYEXJzy9draa-wlsw6xcpctHdnZ5SRmQsw467OxD_QHLbZLV_H8CFAIMO7kjgXqQvx7HTwZUEEGOlVEeJ-iUKCe8T5bVoUpu2R5Zwabt08hTScASPbYeaR9KtGwAGbr591_gX5odYHgTJCde_hxbk--aDhkKo0-V9nXAPzNW9pXR9NWDexwVrfXSHpREUQDG5dJSSOw8Gq49vqRGVz23JEZbat94tvbooIg0ltD0Vd6OsFLBIZEvFu_OMpjUBUnPO5YAPGl4_o4WTlCafoDMJ5afBhoX6R-g8kx6AjAaCgYKAfoSARISFQHGX2Mipd-dzKRf5QxfLy7zdxpHiA0433',
     'cache-control': 'no-cache',
     'content-type': 'text/plain;charset=UTF-8',
     'origin': 'https://labs.google',
