@@ -5,7 +5,8 @@ Response onRequest(RequestContext context) {
     headers: {
       'Content-Type': 'text/html',
     },
-    body: ''' <!DOCTYPE html>
+    body: r'''
+ <!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
@@ -68,7 +69,7 @@ Response onRequest(RequestContext context) {
             const chatBox = document.getElementById('chat-box');
             const loading = document.getElementById('loading');
 
-            chatBox.innerHTML += `<p class='p-2 bg-gray-200 rounded-lg mt-2'>用户: \${prompt}</p>`;
+            chatBox.innerHTML += `<p class='p-2 bg-gray-200 rounded-lg mt-2'>用户: ${prompt}</p>`;
             loading.style.display = 'block';
 
             const apiUrl = 'https://api-key.fusionbrain.ai/';
@@ -140,7 +141,7 @@ Response onRequest(RequestContext context) {
                 loading.style.display = 'none';
                 if (images) {
                     images.forEach(imageBase64 => {
-                        chatBox.innerHTML += `<img src='data:image/png;base64,\${imageBase64}' class='rounded-lg shadow-md mt-2' alt="\${prompt}">`;
+                        chatBox.innerHTML += `<img src='data:image/png;base64,${imageBase64}' class='rounded-lg shadow-md mt-2' alt="${prompt}">`;
                     });
                 } else {
                     chatBox.innerHTML += `<p class='p-2 bg-red-200 rounded-lg mt-2'>生成失败，请重试</p>`;
