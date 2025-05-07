@@ -7,7 +7,9 @@ Future<Response> onRequest(RequestContext context) async {
   //https://mydiumtify.globeapp.dev/foryoublog?query=fruit&pagecount=2
   final queryParams = context.request.uri.queryParameters;
   final query = queryParams['query'] ?? 'fruit';
-  final pagecount = queryParams['pagecount'] ?? '1';
+  final pagecountStr = queryParams['pagecount'] ?? '1';
+  final pagecount = int.tryParse(pagecountStr) ?? 1;
+
   final headers = {
     'Content-Type': 'application/json',
     'Cookie':
