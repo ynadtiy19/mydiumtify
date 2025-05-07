@@ -4,10 +4,10 @@ import 'package:dart_frog/dart_frog.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
-  //https://mydiumtify.globeapp.dev/mediumuuu?query=fruit&pagecount=2
+  //https://mydiumtify.globeapp.dev/foryoublog?query=fruit&pagecount=2
   final queryParams = context.request.uri.queryParameters;
   final query = queryParams['query'] ?? 'fruit';
-  final pagecount = queryParams['pagecount'] ?? 1;
+  final pagecount = queryParams['pagecount'] ?? '1';
   final headers = {
     'Content-Type': 'application/json',
     'Cookie':
@@ -71,7 +71,7 @@ Future<Response> onRequest(RequestContext context) async {
       if (data is List && data.isNotEmpty) {
         final resultJson = data[0];
         return Response.json(
-          body: jsonEncode(resultJson),
+          body: resultJson,
           headers: {
             'Content-Type': 'application/json',
           },
