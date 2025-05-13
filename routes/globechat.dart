@@ -6,9 +6,30 @@ Future<Response> onRequest(RequestContext context) async {
   // 获取查询参数
   final params = context.request.uri.queryParameters;
   final query = params['q'] ?? 'hello how are you doing?🥰🥰';
-  final result = await generateText(
-    model: openai.chat('gpt-4.1'),
-    prompt: query,
-  );
-  return Response(body: result);
+
+  try {
+    final result = await generateText(
+      model: openai.chat('gpt-4o'),
+      prompt: query,
+    );
+
+    return Response.json(
+      body: {
+        'query': query,
+        'response': result,
+      },
+    );
+  } catch (e, stackTrace) {
+    // 日志输出（可替换为更专业的日志工具）
+    print('Error generating text: $e');
+    print(stackTrace);
+
+    return Response.json(
+      statusCode: 500,
+      body: {
+        'error': 'Internal server error',
+        'details': e.toString(),
+      },
+    );
+  }
 }
