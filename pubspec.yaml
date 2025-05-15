@@ -16,7 +16,6 @@ dependencies:
   mysql1: ^0.20.0
   brotli: ^0.6.0
   globe_ai: ^1.0.0+3
-  ai_chat_plus: ^1.2.1
   globe_kv: ^1.0.0+1
 
 dev_dependencies:
