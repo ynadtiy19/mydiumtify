@@ -9,7 +9,6 @@ Future<Response> onRequest(RequestContext context) async {
       statusCode: 500,
       body: {
         'error': 'Internal server error',
-        'details': e.toString(),
       },
     );
 }
