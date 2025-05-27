@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dart_frog/dart_frog.dart';
+import 'package:globe_kv/globe_kv.dart';
 import 'package:http/http.dart' as http;
 
 Future<Response> onRequest(RequestContext context) async {
@@ -13,13 +14,15 @@ Future<Response> onRequest(RequestContext context) async {
   final rebackimg = params['rebackimg']?.toLowerCase() == 'true';
   final aspect =
       params['aspect']?.toUpperCase() ?? 'LANDSCAPE'; // 默认值为 'LANDSCAPE'
+  final kv = GlobeKV('415fa5ffe03eb6c6');
+  final userData = await kv.getString('labimage');
+  print(userData);
 
   final headers = {
     'accept': '*/*',
     'accept-encoding': 'gzip, deflate, br, zstd',
     'accept-language': 'en-US,en;q=0.9',
-    'authorization':
-        'Bearer ya29.a0AW4XtxhywClQ7GrqQTGT0vXIMecxFdw30FLJQl-mzSvi1N3y608KyJJlgjQ2dAInzLda4_lcjisDkjFi4UdhTqbxsEx6GJ40tk5Gyjc5CxRVehJIu4YYetHYG70Xpviaa1xE815aj3EVV5M8ENA9ZuCPc9v0FDSe66v0dGFXRYgVBN8xjiEv3LyQW4XOmBVe4evIFmKRP_6gC62C8aegSyJXJVt6HGdPjat4qZNsgK0ACpni2U_1DOogMzNSXzfsjfetUW6uiQoi-rk9cO7J0PUHZij4aRj-YVpB5pjVTeNfEI-xwl7OpbCWpXlGT-7UaT4sxnqb8mHt9To9dX-h2Xu9O2hd49cmhWNX3y7WkwS4CMziJ56JCCPpIpsq6YY-OZv8A_n_p_JF7FU4_KtnLlBo410ePzxaqr8V0gaCgYKAUUSARISFQHGX2MiEnIUDJwxNGlAloUoDCk5Yg0429',
+    'authorization': 'Bearer $userData',
     'cache-control': 'no-cache',
     'content-type': 'text/plain;charset=UTF-8',
     'origin': 'https://labs.google',
